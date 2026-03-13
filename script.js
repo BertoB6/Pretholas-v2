@@ -1,11 +1,11 @@
 // Banco de dados com 6 camisas em destaque
 const produtosDestaque = [
-    { id: 1, nome: 'Liverpool 25/26', preco: 500.00, imagem: 'images/camisa1.jpg' },
-    { id: 2, nome: 'Real Madrid 25/26', preco: 500.00, imagem: 'images/camisa2.jpg' },
-    { id: 3, nome: 'Barcelona 25/26', preco: 500.00, imagem: 'images/camisa3.jpg' },
-    { id: 4, nome: 'Manchester City 25/26', preco: 500.00, imagem: 'images/camisa4.jpg' },
-    { id: 5, nome: 'Atletico de Madrid 25/26', preco: 500.00, imagem: 'images/camisa5.jpg' },
-    { id: 6, nome: 'Sporting 25/26', preco: 500.00, imagem: 'images/camisa6.jpg' }
+    { id: 1, nome: 'Liverpool 25/26', preco: 500.00, imagem: 'camisa1.jpg' },
+    { id: 2, nome: 'Real Madrid 25/26', preco: 500.00, imagem: 'camisa2.jpg' },
+    { id: 3, nome: 'Barcelona 25/26', preco: 500.00, imagem: 'camisa3.jpg' },
+    { id: 4, nome: 'Manchester City 25/26', preco: 500.00, imagem: 'camisa4.jpg' },
+    { id: 5, nome: 'Atletico de Madrid 25/26', preco: 500.00, imagem: 'camisa5.jpg' },
+    { id: 6, nome: 'Sporting 25/26', preco: 500.00, imagem: 'camisa6.jpg' }
 ];
 
 let carrinho = [];
