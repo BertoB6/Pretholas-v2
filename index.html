@@ -6,6 +6,39 @@
     <title>Pretholas - Loja de Artigos Desportivos</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Ajuste para grade de produtos 2 colunas */
+        .produtos-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 0 10px;
+        }
+
+        .destaques {
+            padding: 20px 0 40px;
+            margin-top: 70px; /* espaço para o header fixo */
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            padding: 0 15px;
+        }
+
+        /* Ajuste para mobile */
+        @media (min-width: 768px) {
+            .produtos-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 30px;
+            }
+        }
+
+        /* Remover margem do header para compensar a remoção do banner */
+        body {
+            padding-top: 0;
+        }
+    </style>
 </head>
 <body>
     <!-- HEADER VERDE FIXO COM MENU HAMBÚRGUER FUNCIONAL -->
@@ -29,22 +62,19 @@
         </div>
     </header>
 
-    <!-- MENU LATERAL (HAMBÚRGUER) -->
-  <div class="side-menu" id="sideMenu">
-    <div class="side-menu-header">
-        <h3>MENU</h3>
-        <button class="close-menu" id="closeMenu">&times;</button>
-    </div>
-    <ul class="side-menu-items">
-        <li><a href="index.html"><i class="fas fa-home"></i> HOME</a></li>
-        <li><a href="produto.html"><i class="fas fa-tshirt"></i> PRODUTOS</a></li>
-        <li><a href="sobre.html"><i class="fas fa-info-circle"></i> SOBRE</a></li>
-        <li><a href="localizacao.html"><i class="fas fa-map-marker-alt"></i> LOCALIZAÇÃO</a></li>
-        <!-- Link para página de produto específico (se necessário) -->
-        <li><a href="produto.html"><i class="fas fa-box"></i> PRODUTO</a></li>
+    <!-- MENU LATERAL (HAMBÚRGUER) CORRIGIDO -->
+    <div class="side-menu" id="sideMenu">
+        <div class="side-menu-header">
+            <h3>MENU</h3>
+            <button class="close-menu" id="closeMenu">&times;</button>
         </div>
-    </ul>
-</div>
+        <ul class="side-menu-items">
+            <li><a href="index.html"><i class="fas fa-home"></i> HOME</a></li>
+            <li><a href="produtos.html"><i class="fas fa-tshirt"></i> PRODUTOS</a></li>
+            <li><a href="sobre.html"><i class="fas fa-info-circle"></i> SOBRE</a></li>
+            <li><a href="localizacao.html"><i class="fas fa-map-marker-alt"></i> LOCALIZAÇÃO</a></li>
+        </ul>
+    </div>
 
     <!-- OVERLAY DO MENU -->
     <div class="menu-overlay" id="menuOverlay"></div>
@@ -69,20 +99,7 @@
         </div>
     </div>
 
-    <!-- BANNER COM IMAGENS TRANSPARENTES -->
-    <section class="banner" id="home">
-        <div class="banner-content">
-            <h1>EXCELÊNCIA EM ARTIGOS DESPORTIVOS</h1>
-            <p>Descubra nossa coleção exclusiva de equipamentos de alta performance</p>
-            <a href="#destaques" class="btn-branco">VER DESTAQUES</a>
-        </div>
-        <div class="banner-images">
-            <img src="logo.jpg" alt="Bola de futebol" class="banner-img bola">
-            <img src="https://cdn-icons-png.flaticon.com/512/3094/3094863.png" alt="Chuteira" class="banner-img chuteira">
-        </div>
-    </section>
-
-    <!-- PRODUTOS EM DESTAQUE (6 CAMISAS) -->
+    <!-- PRODUTOS EM DESTAQUE (6 PRODUTOS - ORGANIZADOS 2,2,2) -->
     <section class="destaques" id="destaques">
         <div class="container">
             <h2 class="section-title">DESTAQUES DA SEMANA</h2>
@@ -107,11 +124,10 @@
             <div class="footer-col">
                 <h3>LINKS</h3>
                 <ul>
-                    <li><a href="#home">HOME</a></li>
-                    <li><a href="#destaques">DESTAQUES</a></li>
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="produtos.html">PRODUTOS</a></li>
                     <li><a href="sobre.html">SOBRE</a></li>
                     <li><a href="localizacao.html">LOCALIZAÇÃO</a></li>
-                    <li><a href="produto.html">PRODUTOS</a></li>
                 </ul>
             </div>
         </div>
@@ -121,5 +137,72 @@
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        // Dados dos produtos em destaque (6 camisas)
+        const produtosDestaque = [
+            { id: 1, nome: 'Liverpool 25/26', preco: 500.00, imagem: 'images/camisa1.jpg' },
+            { id: 2, nome: 'Real Madrid 25/26', preco: 500.00, imagem: 'images/camisa2.jpg' },
+            { id: 3, nome: 'Barcelona 25/26', preco: 500.00, imagem: 'images/camisa3.jpg' },
+            { id: 4, nome: 'Manchester City 25/26', preco: 500.00, imagem: 'images/camisa4.jpg' },
+            { id: 5, nome: 'Chelsea 25/26', preco: 500.00, imagem: 'images/camisa5.jpg' },
+            { id: 6, nome: 'Arsenal 25/26', preco: 500.00, imagem: 'images/camisa6.jpg' }
+        ];
+
+        // Carrinho (vem do script.js global)
+        let carrinho = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            renderizarDestaques();
+            
+            // Carregar funções do script.js
+            if (typeof carregarCarrinho === 'function') carregarCarrinho();
+            if (typeof initMenu === 'function') initMenu();
+            if (typeof initCart === 'function') initCart();
+        });
+
+        function renderizarDestaques() {
+            const container = document.getElementById('produtos-destaque');
+            if (!container) return;
+            
+            container.innerHTML = produtosDestaque.map(prod => `
+                <div class="produto-card">
+                    <div class="produto-img">
+                        <img src="${prod.imagem}" alt="${prod.nome}" onerror="this.src='https://via.placeholder.com/300x225?text=Pretholas'">
+                    </div>
+                    <div class="produto-info">
+                        <h3 class="produto-nome">${prod.nome}</h3>
+                        <div class="produto-preco">${prod.preco.toFixed(2)}MT</div>
+                        <button class="btn-comprar" onclick="adicionarAoCarrinho(${prod.id})">COMPRAR</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function adicionarAoCarrinho(id) {
+            const produto = produtosDestaque.find(p => p.id === id);
+            if (!produto) return;
+
+            const existente = carrinho.find(item => item.id === id);
+            
+            if (existente) {
+                existente.quantidade++;
+            } else {
+                carrinho.push({
+                    id: produto.id,
+                    nome: produto.nome,
+                    preco: produto.preco,
+                    imagem: produto.imagem,
+                    quantidade: 1
+                });
+            }
+            
+            // Usar função do script.js se existir
+            if (typeof atualizarCarrinho === 'function') {
+                atualizarCarrinho();
+            }
+            
+            alert(`${produto.nome} adicionado ao carrinho!`);
+        }
+    </script>
 </body>
 </html>
