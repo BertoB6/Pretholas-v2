@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre Nós - Pretholas</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Estilos específicos para página sobre */
+        .page-header {
+            margin-top: 70px;
+            background: linear-gradient(135deg, var(--verde-principal), var(--verde-escuro));
+            color: var(--branco);
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Seção sobre */
+        .sobre-completo {
+            padding: 60px 0;
+        }
+
+        .sobre-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .sobre-imagem {
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .sobre-imagem img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s;
+        }
+
+        .sobre-imagem:hover img {
+            transform: scale(1.05);
+        }
+
+        .sobre-texto h2 {
+            color: var(--verde-principal);
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .sobre-texto h3 {
+            font-size: 2.5rem;
+            margin-bottom: 25px;
+            line-height: 1.2;
+        }
+
+        .sobre-texto p {
+            color: var(--cinza-escuro);
+            margin-bottom: 20px;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .missao-visao-valores {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .mvv-card {
+            background-color: var(--branco);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            border: 1px solid var(--cinza-borda);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .mvv-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .mvv-card i {
+            font-size: 2.5rem;
+            color: var(--verde-principal);
+            margin-bottom: 20px;
+        }
+
+        .mvv-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--preto);
+        }
+
+        .mvv-card p {
+            color: var(--cinza-escuro);
+            line-height: 1.6;
+        }
+
+        .valores-lista {
+            margin-top: 60px;
+            background-color: var(--cinza);
+            padding: 40px;
+            border-radius: 10px;
+        }
+
+        .valores-lista h3 {
+            color: var(--verde-principal);
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .valores-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .valor-item {
+            text-align: center;
+        }
+
+        .valor-item i {
+            font-size: 2rem;
+            color: var(--verde-principal);
+            margin-bottom: 15px;
+        }
+
+        .valor-item h5 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .valor-item p {
+            color: var(--cinza-escuro);
+        }
+
+        @media (max-width: 768px) {
+            .sobre-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .missao-visao-valores {
+                grid-template-columns: 1fr;
+            }
+
+            .sobre-texto h3 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER (mesmo do index) -->
+    <header class="header">
+        <div class="header-container">
+            <div class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="logo">
+                <h1>PRETHOLAS</h1>
+            </div>
+            <div class="cart-icon" id="cartToggle">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cartCount">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- MENU LATERAL -->
+    <div class="side-menu" id="sideMenu">
+        <div class="side-menu-header">
+            <h3>MENU</h3>
+            <button class="close-menu" id="closeMenu">&times;</button>
+        </div>
+        <ul class="side-menu-items">
+            <li><a href="index.html"><i class="fas fa-home"></i> HOME</a></li>
+            <li><a href="produtos.html"><i class="fas fa-tshirt"></i> PRODUTOS</a></li>
+            <li><a href="sobre.html" class="active"><i class="fas fa-info-circle"></i> SOBRE</a></li>
+            <li><a href="localizacao.html"><i class="fas fa-map-marker-alt"></i> LOCALIZAÇÃO</a></li>
+        </ul>
+    </div>
+
+    <!-- OVERLAY DO MENU -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <!-- CARRINHO DROPDOWN -->
+    <div class="cart-dropdown" id="cartDropdown">
+        <div class="cart-header">
+            <h3>SEU CARRINHO</h3>
+            <button class="close-cart" id="closeCart">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <p class="cart-empty">Seu carrinho está vazio</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotal">0.00MT</span>
+            </div>
+            <button class="btn-checkout" id="btnCheckout" onclick="checkout()">
+                FINALIZAR PEDIDO <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- CABEÇALHO DA PÁGINA -->
+    <section class="page-header">
+        <div class="container">
+            <h1>SOBRE A PRETHOLAS</h1>
+            
+    </section>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <section class="sobre-completo">
+        <div class="container">
+            <div class="sobre-grid">
+                <div class="sobre-imagem">
+                    <img src="images/sobre.jpg" alt="Sobre a Pretholas" onerror="this.src='https://via.placeholder.com/600x400?text=Pretholas'">
+                </div>
+                <div class="sobre-texto">
+                    <h2>DESDE 2010</h2>
+                    <h3>Excelência em Cada Detalhe</h3>
+                    <p>Loja dedicada em fornecer itens desportivos de qualidade, a Pretholas nasceu da paixão pelo esporte e do compromisso com a excelência. Nossa missão é fornecer artigos desportivos que combinam design sofisticado, tecnologia de ponta e desempenho superior.</p>
+                    <p>Temos fornecedores de artigos desportivos com identidade no mercado e confiança, utilizando o nosso blog de equipa para dar informações sobre futebol e desporto nacional, também fornecemos produtos para nossos queridos fãs.</p>
+                    <p>Na Pretholas, acreditamos que o verdadeiro luxo está na perfeição dos detalhes e na capacidade de elevar a performance de cada atleta, do amador ao profissional.</p>
+                </div>
+            </div>
+
+            <!-- Missão, Visão e Valores -->
+            <div class="missao-visao-valores">
+                <div class="mvv-card">
+                    <i class="fas fa-bullseye"></i>
+                    <h4>Missão</h4>
+                    <p>Fornecer artigos desportivos de alta qualidade que combinam design sofisticado, tecnologia de ponta e desempenho superior para atletas de todos os níveis.</p>
+                </div>
+                <div class="mvv-card">
+                    <i class="fas fa-eye"></i>
+                    <h4>Visão</h4>
+                    <p>Ser referência em Moçambique no fornecimento de artigos desportivos de luxo, reconhecida pela qualidade e compromisso com o esporte.</p>
+                </div>
+                <div class="mvv-card">
+                    <i class="fas fa-heart"></i>
+                    <h4>Valores</h4>
+                    <p>Excelência, Integridade, Paixão pelo Esporte, Inovação, Compromisso com o Cliente e Responsabilidade Social.</p>
+                </div>
+            </div>
+
+            <!-- Nossos Valores em Detalhe -->
+            <div class="valores-lista">
+                <h3>NOSSOS VALORES</h3>
+                <div class="valores-grid">
+                    <div class="valor-item">
+                        <i class="fas fa-star"></i>
+                        <h5>Excelência</h5>
+                        <p>Buscamos a perfeição em cada detalhe</p>
+                    </div>
+                    <div class="valor-item">
+                        <i class="fas fa-handshake"></i>
+                        <h5>Integridade</h5>
+                        <p>Agimos com honestidade e transparência</p>
+                    </div>
+                    <div class="valor-item">
+                        <i class="fas fa-futbol"></i>
+                        <h5>Paixão</h5>
+                        <p>Vivemos e respiramos esporte</p>
+                    </div>
+                    <div class="valor-item">
+                        <i class="fas fa-lightbulb"></i>
+                        <h5>Inovação</h5>
+                        <p>Buscamos constantemente novidades</p>
+                    </div>
+                    <div class="valor-item">
+                        <i class="fas fa-users"></i>
+                        <h5>Cliente</h5>
+                        <p>Nossa prioridade é sua satisfação</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>PRETHOLAS</h3>
+                <p>Excelência em artigos desportivos.</p>
+                <div class="social-links">
+                    <a href="https://facebook.com/jamaldinejumaSumila"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://wa.me/258852158504"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>LINKS</h3>
+                <ul>
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="produtos.html">PRODUTOS</a></li>
+                    <li><a href="sobre.html">SOBRE</a></li>
+                    <li><a href="localizacao.html">LOCALIZAÇÃO</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>COPYRIGHT © 2025 PRETHOLAS. TODOS OS DIREITOS RESERVADOS.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof carregarCarrinho === 'function') carregarCarrinho();
+            if (typeof initMenu === 'function') initMenu();
+            if (typeof initCart === 'function') initCart();
+        });
+    </script>
+</body>
+</html>

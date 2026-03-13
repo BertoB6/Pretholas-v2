@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pretholas - Loja de Artigos Desportivos</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- HEADER VERDE FIXO COM MENU HAMBÚRGUER FUNCIONAL -->
+    <header class="header">
+        <div class="header-container">
+            <!-- Menu Hambúrguer (antes do logo) -->
+            <div class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            
+            <!-- Logo -->
+            <div class="logo">
+                <h1>PRETHOLAS</h1>
+            </div>
+            
+            <!-- Carrinho com contador -->
+            <div class="cart-icon" id="cartToggle">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cartCount">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- MENU LATERAL (HAMBÚRGUER) -->
+  <div class="side-menu" id="sideMenu">
+    <div class="side-menu-header">
+        <h3>MENU</h3>
+        <button class="close-menu" id="closeMenu">&times;</button>
+    </div>
+    <ul class="side-menu-items">
+        <li><a href="index.html"><i class="fas fa-home"></i> HOME</a></li>
+        <li><a href="produtos.html"><i class="fas fa-tshirt"></i> PRODUTOS</a></li>
+        <li><a href="sobre.html"><i class="fas fa-info-circle"></i> SOBRE</a></li>
+        <li><a href="localizacao.html"><i class="fas fa-map-marker-alt"></i> LOCALIZAÇÃO</a></li>
+        <!-- Link para página de produto específico (se necessário) -->
+        <li><a href="produto.html"><i class="fas fa-box"></i> PRODUTO</a></li>
+        </div>
+    </ul>
+</div>
+
+    <!-- OVERLAY DO MENU -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <!-- CARRINHO DROPDOWN -->
+    <div class="cart-dropdown" id="cartDropdown">
+        <div class="cart-header">
+            <h3>SEU CARRINHO</h3>
+            <button class="close-cart" id="closeCart">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <p class="cart-empty">Seu carrinho está vazio</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotal">0.00MT</span>
+            </div>
+            <button class="btn-checkout" id="btnCheckout" onclick="checkout()">
+                FINALIZAR PEDIDO <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- BANNER COM IMAGENS TRANSPARENTES -->
+    <section class="banner" id="home">
+        <div class="banner-content">
+            <h1>EXCELÊNCIA EM ARTIGOS DESPORTIVOS</h1>
+            <p>Descubra nossa coleção exclusiva de equipamentos de alta performance</p>
+            <a href="#destaques" class="btn-branco">VER DESTAQUES</a>
+        </div>
+        <div class="banner-images">
+            <img src="logo.jpg" alt="Bola de futebol" class="banner-img bola">
+            <img src="https://cdn-icons-png.flaticon.com/512/3094/3094863.png" alt="Chuteira" class="banner-img chuteira">
+        </div>
+    </section>
+
+    <!-- PRODUTOS EM DESTAQUE (6 CAMISAS) -->
+    <section class="destaques" id="destaques">
+        <div class="container">
+            <h2 class="section-title">DESTAQUES DA SEMANA</h2>
+            <div class="produtos-grid" id="produtos-destaque">
+                <!-- Os 6 produtos serão carregados via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER SIMPLES -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>PRETHOLAS</h3>
+                <p>Excelência em artigos desportivos.</p>
+                <div class="social-links">
+                    <a href="https://facebook.com/jamaldinejumaSumila"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://wa.me/258852158504"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>LINKS</h3>
+                <ul>
+                    <li><a href="#home">HOME</a></li>
+                    <li><a href="#destaques">DESTAQUES</a></li>
+                    <li><a href="sobre.html">SOBRE</a></li>
+                    <li><a href="localizacao.html">LOCALIZAÇÃO</a></li>
+                    <li><a href="produto.html">PRODUTOS</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>COPYRIGHT © 2025 PRETHOLAS. TODOS OS DIREITOS RESERVADOS.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

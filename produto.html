@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos - Pretholas</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Estilos específicos para página de produtos */
+        .page-header {
+            margin-top: 70px;
+            background: linear-gradient(135deg, var(--verde-principal), var(--verde-escuro));
+            color: var(--branco);
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Filtros */
+        .filtros-section {
+            background-color: var(--cinza);
+            padding: 30px 0;
+            border-bottom: 1px solid var(--cinza-borda);
+        }
+
+        .filtros-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filtro-btn {
+            background-color: var(--branco);
+            border: 2px solid var(--verde-principal);
+            color: var(--verde-principal);
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 150px;
+            text-align: center;
+        }
+
+        .filtro-btn:hover {
+            background-color: var(--verde-principal);
+            color: var(--branco);
+            transform: translateY(-2px);
+        }
+
+        .filtro-btn.active {
+            background-color: var(--verde-principal);
+            color: var(--branco);
+        }
+
+        /* Seções de produtos */
+        .categoria-section {
+            padding: 40px 0;
+            border-bottom: 1px solid var(--cinza-borda);
+        }
+
+        .categoria-section:last-child {
+            border-bottom: none;
+        }
+
+        .categoria-titulo {
+            font-size: 2rem;
+            color: var(--verde-principal);
+            margin-bottom: 30px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .categoria-titulo::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 5px;
+            height: 40px;
+            background-color: var(--verde-principal);
+            border-radius: 5px;
+        }
+
+        /* Mensagem de nenhum resultado */
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            background-color: var(--cinza);
+            border-radius: 10px;
+            margin: 40px 0;
+        }
+
+        .no-results i {
+            font-size: 4rem;
+            color: var(--cinza-escuro);
+            margin-bottom: 20px;
+        }
+
+        .no-results h3 {
+            font-size: 1.5rem;
+            color: var(--cinza-escuro);
+            margin-bottom: 10px;
+        }
+
+        .no-results p {
+            color: var(--cinza-escuro);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Scroll suave */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER (mesmo do index) -->
+    <header class="header">
+        <div class="header-container">
+            <div class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="logo">
+                <h1>PRETHOLAS</h1>
+            </div>
+            <div class="cart-icon" id="cartToggle">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cartCount">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- MENU LATERAL CORRIGIDO -->
+    <div class="side-menu" id="sideMenu">
+        <div class="side-menu-header">
+            <h3>MENU</h3>
+            <button class="close-menu" id="closeMenu">&times;</button>
+        </div>
+        <ul class="side-menu-items">
+            <li><a href="index.html"><i class="fas fa-home"></i> HOME</a></li>
+            <li><a href="produto.html" class="active"><i class="fas fa-tshirt"></i> PRODUTOS</a></li>
+            <li><a href="sobre.html"><i class="fas fa-info-circle"></i> SOBRE</a></li>
+            <li><a href="localizacao.html"><i class="fas fa-map-marker-alt"></i> LOCALIZAÇÃO</a></li>
+        </ul>
+    </div>
+
+    <!-- OVERLAY DO MENU -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <!-- CARRINHO DROPDOWN -->
+    <div class="cart-dropdown" id="cartDropdown">
+        <div class="cart-header">
+            <h3>SEU CARRINHO</h3>
+            <button class="close-cart" id="closeCart">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <p class="cart-empty">Seu carrinho está vazio</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotal">0.00MT</span>
+            </div>
+            <button class="btn-checkout" id="btnCheckout" onclick="checkout()">
+                FINALIZAR PEDIDO <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- FILTROS -->
+    <section class="filtros-section">
+        <div class="filtros-container">
+            <button class="filtro-btn active" onclick="filtrar('todos')">TODOS</button>
+            <button class="filtro-btn" onclick="filtrar('camisas')">CAMISAS</button>
+            <button class="filtro-btn" onclick="filtrar('bolas')">BOLAS</button>
+            <button class="filtro-btn" onclick="filtrar('chuteiras')">CHUTEIRAS</button>
+        </div>
+    </section>
+
+    <!-- PRODUTOS - CAMISAS (8) -->
+    <section class="categoria-section" id="camisas-section">
+        <div class="container">
+            <h2 class="categoria-titulo">CAMISAS DE CLUBE</h2>
+            <div class="produtos-grid" id="camisas-grid">
+                <!-- Será preenchido via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUTOS - BOLAS (4) -->
+    <section class="categoria-section" id="bolas-section">
+        <div class="container">
+            <h2 class="categoria-titulo">BOLAS</h2>
+            <div class="produtos-grid" id="bolas-grid">
+                <!-- Será preenchido via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUTOS - CHUTEIRAS (2) -->
+    <section class="categoria-section" id="chuteiras-section">
+        <div class="container">
+            <h2 class="categoria-titulo">CHUTEIRAS</h2>
+            <div class="produtos-grid" id="chuteiras-grid">
+                <!-- Será preenchido via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- MENSAGEM DE NENHUM RESULTADO (oculta por padrão) -->
+    <div class="no-results hidden" id="noResults">
+        <i class="fas fa-search"></i>
+        <h3>Nenhum produto encontrado</h3>
+        <p>Tente outro filtro ou categoria</p>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>PRETHOLAS</h3>
+                <p>Excelência em artigos desportivos.</p>
+                <div class="social-links">
+                    <a href="https://facebook.com/jamaldinejumaSumila"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://wa.me/258852158504"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>LINKS</h3>
+                <ul>
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="produtos.html">PRODUTOS</a></li>
+                    <li><a href="sobre.html">SOBRE</a></li>
+                    <li><a href="localizacao.html">LOCALIZAÇÃO</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>COPYRIGHT © 2025 PRETHOLAS. TODOS OS DIREITOS RESERVADOS.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // ===== DADOS COMPLETOS DOS PRODUTOS =====
+        const todosProdutos = {
+            camisas: [
+                { id: 1, nome: 'Liverpool 25/26', preco: 500.00, imagem: 'images/camisa1.jpg' },
+                { id: 2, nome: 'Real Madrid 25/26', preco: 500.00, imagem: 'images/camisa2.jpg' },
+                { id: 3, nome: 'Barcelona 25/26', preco: 500.00, imagem: 'images/camisa3.jpg' },
+                { id: 4, nome: 'Manchester City 25/26', preco: 500.00, imagem: 'images/camisa4.jpg' },
+                { id: 5, nome: 'Atletico de Madrid 25/26', preco: 500.00, imagem: 'images/camisa5.jpg' },
+                { id: 6, nome: 'Sporting 25/26', preco: 500.00, imagem: 'images/camisa6.jpg' },
+                { id: 7, nome: 'Benfica 25/26', preco: 500.00, imagem: 'images/camisa7.jpg' },
+                { id: 8, nome: 'Benfica Fora 25/26', preco: 500.00, imagem: 'images/camisa8.jpg' }
+            ],
+            bolas: [
+                { id: 9, nome: 'Bola de Futebol', preco: 3500.00, imagem: 'images/bola1.jpg' },
+                { id: 10, nome: 'Bola de Campo Oficial', preco: 3500.00, imagem: 'images/bola2.jpg' },
+                { id: 11, nome: 'Bola de Futebol', preco: 3500.00, imagem: 'images/bola3.jpg' },
+                { id: 12, nome: 'Bola Society', preco: 3500.00, imagem: 'images/bola4.jpg' }
+            ],
+            chuteiras: [
+                { id: 13, nome: 'Chuteira Elite FG', preco: 2500.00, imagem: 'images/chuteira1.jpg' },
+                { id: 14, nome: 'Chuteira Pro SG', preco: 2500.00, imagem: 'images/chuteira2.jpg' }
+            ]
+        };
+
+        // ===== FUNÇÃO PARA RENDERIZAR CARDS =====
+        function renderizarCards(produtos, containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            container.innerHTML = produtos.map(prod => `
+                <div class="produto-card">
+                    <div class="produto-img">
+                        <img src="${prod.imagem}" alt="${prod.nome}" onerror="this.src='https://via.placeholder.com/300x225?text=Pretholas'">
+                    </div>
+                    <div class="produto-info">
+                        <h3 class="produto-nome">${prod.nome}</h3>
+                        <div class="produto-preco">${prod.preco.toFixed(2)}MT</div>
+                        <button class="btn-comprar" onclick="adicionarAoCarrinho(${prod.id})">COMPRAR</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ===== FUNÇÃO DE FILTRAGEM =====
+        function filtrar(categoria) {
+            // Atualizar botões ativos
+            document.querySelectorAll('.filtro-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Mostrar/esconder seções
+            const camisasSection = document.getElementById('camisas-section');
+            const bolasSection = document.getElementById('bolas-section');
+            const chuteirasSection = document.getElementById('chuteiras-section');
+            const noResults = document.getElementById('noResults');
+
+            // Resetar visibilidade
+            camisasSection.style.display = 'block';
+            bolasSection.style.display = 'block';
+            chuteirasSection.style.display = 'block';
+            noResults.classList.add('hidden');
+
+            if (categoria === 'todos') {
+                // Mostrar todas as seções
+                camisasSection.style.display = 'block';
+                bolasSection.style.display = 'block';
+                chuteirasSection.style.display = 'block';
+            } else if (categoria === 'camisas') {
+                camisasSection.style.display = 'block';
+                bolasSection.style.display = 'none';
+                chuteirasSection.style.display = 'none';
+            } else if (categoria === 'bolas') {
+                camisasSection.style.display = 'none';
+                bolasSection.style.display = 'block';
+                chuteirasSection.style.display = 'none';
+            } else if (categoria === 'chuteiras') {
+                camisasSection.style.display = 'none';
+                bolasSection.style.display = 'none';
+                chuteirasSection.style.display = 'block';
+            }
+
+            // Scroll suave para o topo da seção
+            document.querySelector('.filtros-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // ===== INICIALIZAÇÃO =====
+        document.addEventListener('DOMContentLoaded', function() {
+            // Renderizar todas as categorias
+            renderizarCards(todosProdutos.camisas, 'camisas-grid');
+            renderizarCards(todosProdutos.bolas, 'bolas-grid');
+            renderizarCards(todosProdutos.chuteiras, 'chuteiras-grid');
+
+            // Inicializar funções do carrinho (do script.js global)
+            if (typeof carregarCarrinho === 'function') {
+                carregarCarrinho();
+            }
+            
+            // Inicializar menu
+            if (typeof initMenu === 'function') {
+                initMenu();
+            }
+            
+            // Inicializar carrinho dropdown
+            if (typeof initCart === 'function') {
+                initCart();
+            }
+        });
+
+        // ===== FUNÇÃO DE ADICIONAR AO CARRINHO (usando dados completos) =====
+        function adicionarAoCarrinho(id) {
+            // Buscar produto em todas as categorias
+            let produto = null;
+            
+            // Procurar nas camisas
+            produto = todosProdutos.camisas.find(p => p.id === id);
+            
+            // Se não encontrou, procurar nas bolas
+            if (!produto) {
+                produto = todosProdutos.bolas.find(p => p.id === id);
+            }
+            
+            // Se não encontrou, procurar nas chuteiras
+            if (!produto) {
+                produto = todosProdutos.chuteiras.find(p => p.id === id);
+            }
+            
+            if (!produto) return;
+
+            const existente = carrinho.find(item => item.id === id);
+            
+            if (existente) {
+                existente.quantidade++;
+            } else {
+                carrinho.push({
+                    id: produto.id,
+                    nome: produto.nome,
+                    preco: produto.preco,
+                    imagem: produto.imagem,
+                    quantidade: 1
+                });
+            }
+            
+            atualizarCarrinho();
+            alert(`${produto.nome} adicionado ao carrinho!`);
+        }
+    </script>
+</body>
+</html>

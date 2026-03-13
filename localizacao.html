@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Localização - Pretholas</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Estilos específicos para página de localização */
+        .page-header {
+            margin-top: 70px;
+            background: linear-gradient(135deg, var(--verde-principal), var(--verde-escuro));
+            color: var(--branco);
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Seção de localização */
+        .localizacao-completa {
+            padding: 60px 0;
+        }
+
+        .localizacao-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: start;
+        }
+
+        .info-card {
+            background-color: var(--branco);
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            border: 1px solid var(--cinza-borda);
+        }
+
+        .info-card h2 {
+            color: var(--verde-principal);
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .info-card h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--verde-principal);
+        }
+
+        .info-detalhe {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .info-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--verde-principal);
+            color: var(--branco);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .info-texto h3 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            color: var(--preto);
+        }
+
+        .info-texto p {
+            color: var(--cinza-escuro);
+            line-height: 1.6;
+        }
+
+        .info-texto a {
+            color: var(--verde-principal);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .info-texto a:hover {
+            text-decoration: underline;
+        }
+
+        .mapa-card {
+            background-color: var(--branco);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            border: 1px solid var(--cinza-borda);
+        }
+
+        .mapa-card h2 {
+            color: var(--verde-principal);
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+            padding-left: 20px;
+            padding-top: 30px;
+        }
+
+        .mapa-card h2::after {
+            content: '';
+            position: absolute;
+            left: 20px;
+            bottom: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--verde-principal);
+        }
+
+        .mapa-container {
+            width: 100%;
+            height: 450px;
+            border-radius: 0 0 10px 10px;
+            overflow: hidden;
+        }
+
+        .mapa-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .horario-card {
+            margin-top: 40px;
+            background-color: var(--branco);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            border: 1px solid var(--cinza-borda);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .horario-item {
+            text-align: center;
+        }
+
+        .horario-item i {
+            font-size: 2rem;
+            color: var(--verde-principal);
+            margin-bottom: 15px;
+        }
+
+        .horario-item h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--preto);
+        }
+
+        .horario-item p {
+            color: var(--cinza-escuro);
+        }
+
+        .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #25D366;
+            color: var(--branco);
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+
+        .whatsapp-btn:hover {
+            background-color: #128C7E;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .localizacao-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .info-card, .mapa-card {
+                padding: 20px;
+            }
+
+            .horario-card {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER (mesmo do index) -->
+    <header class="header">
+        <div class="header-container">
+            <div class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="logo">
+                <h1>PRETHOLAS</h1>
+            </div>
+            <div class="cart-icon" id="cartToggle">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cartCount">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- MENU LATERAL -->
+    <div class="side-menu" id="sideMenu">
+        <div class="side-menu-header">
+            <h3>MENU</h3>
+            <button class="close-menu" id="closeMenu">&times;</button>
+        </div>
+        <ul class="side-menu-items">
+            <li><a href="index.html"><i class="fas fa-home"></i> HOME</a></li>
+            <li><a href="produtos.html"><i class="fas fa-tshirt"></i> PRODUTOS</a></li>
+            <li><a href="sobre.html"><i class="fas fa-info-circle"></i> SOBRE</a></li>
+            <li><a href="localizacao.html" class="active"><i class="fas fa-map-marker-alt"></i> LOCALIZAÇÃO</a></li>
+        </ul>
+    </div>
+
+    <!-- OVERLAY DO MENU -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <!-- CARRINHO DROPDOWN -->
+    <div class="cart-dropdown" id="cartDropdown">
+        <div class="cart-header">
+            <h3>SEU CARRINHO</h3>
+            <button class="close-cart" id="closeCart">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <p class="cart-empty">Seu carrinho está vazio</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotal">0.00MT</span>
+            </div>
+            <button class="btn-checkout" id="btnCheckout" onclick="checkout()">
+                FINALIZAR PEDIDO <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- CABEÇALHO DA PÁGINA -->
+    <section class="page-header">
+        <div class="container">
+            <h1>NOSSA LOCALIZAÇÃO</h1>
+            <p>Venha nos visitar ou entre em contato</p>
+        </div>
+    </section>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <section class="localizacao-completa">
+        <div class="container">
+            <div class="localizacao-grid">
+                <!-- Informações de contato -->
+                <div class="info-card">
+                    <h2>INFORMAÇÕES</h2>
+                    
+                    <div class="info-detalhe">
+                        <div class="info-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="info-texto">
+                            <h3>Endereço</h3>
+                            <p>Emulação, NATITE<br>
+                            Pemba, Cabo Delgado<br>
+                            Moçambique</p>
+                        </div>
+                    </div>
+
+                    <div class="info-detalhe">
+                        <div class="info-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="info-texto">
+                            <h3>Telefone</h3>
+                            <p><a href="tel:+258852158504">+258 85 215 8504</a></p>
+                            <p>Atendimento: Seg-Sex, 8h-18h</p>
+                        </div>
+                    </div>
+
+                    <div class="info-detalhe">
+                        <div class="info-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="info-texto">
+                            <h3>Email</h3>
+                            <p><a href="mailto:contato@pretholas.co.mz">contato@pretholas.co.mz</a></p>
+                        </div>
+                    </div>
+
+                    <a href="https://wa.me/258852158504" class="whatsapp-btn" target="_blank">
+                        <i class="fab fa-whatsapp"></i>
+                        FALE CONOSCO NO WHATSAPP
+                    </a>
+                </div>
+
+                <!-- Mapa -->
+                <div class="mapa-card">
+                    <h2>MAPA</h2>
+                    <div class="mapa-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15802.123456789!2d40.123456!3d-12.123456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTLCsDA3JzI0LjQiUyA0MMKwMDgnMjQuMCJF!5e0!3m2!1spt-PT!2smz!4v1234567890" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Horário de funcionamento -->
+            <div class="horario-card">
+                <div class="horario-item">
+                    <i class="fas fa-clock"></i>
+                    <h4>Segunda - Sexta</h4>
+                    <p>08:00 - 18:00</p>
+                </div>
+                <div class="horario-item">
+                    <i class="fas fa-clock"></i>
+                    <h4>Sábado</h4>
+                    <p>09:00 - 13:00</p>
+                </div>
+                <div class="horario-item">
+                    <i class="fas fa-clock"></i>
+                    <h4>Domingo</h4>
+                    <p>Fechado</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>PRETHOLAS</h3>
+                <p>Excelência em artigos desportivos.</p>
+                <div class="social-links">
+                    <a href="https://facebook.com/jamaldinejumaSumila"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://wa.me/258852158504"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>LINKS</h3>
+                <ul>
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="produtos.html">PRODUTOS</a></li>
+                    <li><a href="sobre.html">SOBRE</a></li>
+                    <li><a href="localizacao.html">LOCALIZAÇÃO</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>COPYRIGHT © 2025 PRETHOLAS. TODOS OS DIREITOS RESERVADOS.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof carregarCarrinho === 'function') carregarCarrinho();
+            if (typeof initMenu === 'function') initMenu();
+            if (typeof initCart === 'function') initCart();
+        });
+    </script>
+</body>
+</html>
