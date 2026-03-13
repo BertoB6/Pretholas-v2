@@ -1,33 +1,33 @@
 // ===== DADOS DOS PRODUTOS MISTURADOS =====
 const produtos = [
     // Camisas
-    { id: 1, nome: 'Liverpool 25/26', preco: 500.00, imagem: 'images/camisa1.jpg' },
+    { id: 1, nome: 'Liverpool 25/26', preco: 500.00, imagem: 'camisa1.jpg' },
     // Bolas
-    { id: 9, nome: 'Bola de Futsal Pro', preco: 300.00, imagem: 'images/bola1.jpg' },
+    { id: 9, nome: 'Bola de Futsal Pro', preco: 300.00, imagem: 'bola1.jpg' },
     // Camisas
-    { id: 2, nome: 'Real Madrid 25/26', preco: 500.00, imagem: 'images/camisa2.jpg' },
+    { id: 2, nome: 'Real Madrid 25/26', preco: 500.00, imagem: 'camisa2.jpg' },
     // Chuteiras
-    { id: 13, nome: 'Chuteira Elite FG', preco: 1200.00, imagem: 'images/chuteira1.jpg' },
+    { id: 13, nome: 'Chuteira Elite FG', preco: 1200.00, imagem: 'chuteira1.jpg' },
     // Camisas
-    { id: 3, nome: 'Barcelona 25/26', preco: 500.00, imagem: 'images/camisa3.jpg' },
+    { id: 3, nome: 'Barcelona 25/26', preco: 500.00, imagem: 'camisa3.jpg' },
     // Bolas
-    { id: 10, nome: 'Bola de Campo Oficial', preco: 2000.00, imagem: 'images/bola2.jpg' },
+    { id: 10, nome: 'Bola de Campo Oficial', preco: 2000.00, imagem: 'bola2.jpg' },
     // Camisas
-    { id: 4, nome: 'Manchester City 25/26', preco: 500.00, imagem: 'images/camisa4.jpg' },
+    { id: 4, nome: 'Manchester City 25/26', preco: 500.00, imagem: 'camisa4.jpg' },
     // Chuteiras
-    { id: 14, nome: 'Chuteira Pro SG', preco: 1500.00, imagem: 'images/chuteira2.jpg' },
+    { id: 14, nome: 'Chuteira Pro SG', preco: 1500.00, imagem: 'chuteira2.jpg' },
     // Camisas
-    { id: 5, nome: 'Chelsea 25/26', preco: 500.00, imagem: 'images/camisa5.jpg' },
+    { id: 5, nome: 'Chelsea 25/26', preco: 500.00, imagem: 'camisa5.jpg' },
     // Bolas
-    { id: 11, nome: 'Bola de Treino', preco: 800.00, imagem: 'images/bola3.jpg' },
+    { id: 11, nome: 'Bola de Treino', preco: 800.00, imagem: 'bola3.jpg' },
     // Camisas
-    { id: 6, nome: 'Arsenal 25/26', preco: 500.00, imagem: 'images/camisa6.jpg' },
+    { id: 6, nome: 'Arsenal 25/26', preco: 500.00, imagem: 'camisa6.jpg' },
     // Bolas
-    { id: 12, nome: 'Bola Society', preco: 1200.00, imagem: 'images/bola4.jpg' },
+    { id: 12, nome: 'Bola Society', preco: 1200.00, imagem: 'bola4.jpg' },
     // Camisas
-    { id: 7, nome: 'Benfica 25/26', preco: 500.00, imagem: 'images/camisa7.jpg' },
+    { id: 7, nome: 'Benfica 25/26', preco: 500.00, imagem: 'camisa7.jpg' },
     // Camisas
-    { id: 8, nome: 'Sporting 25/26', preco: 500.00, imagem: 'images/camisa8.jpg' }
+    { id: 8, nome: 'Sporting 25/26', preco: 500.00, imagem: 'camisa8.jpg' }
 ];
 
 // ===== VARIÁVEIS GLOBAIS =====
