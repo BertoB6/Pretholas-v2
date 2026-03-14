@@ -849,37 +849,40 @@
     </footer>
 
     <script>
-        // ===== TODOS OS PRODUTOS COM CAMINHOS CORRIGIDOS =====
-        const produtos = [
-            // Camisas (10)
-            { id: 1, nome: 'Liverpool 25/26', preco: 500.00, imagem: 'camisa1.jpg', categoria: 'camisas' },
-            { id: 2, nome: 'Real Madrid 25/26', preco: 500.00, imagem: 'camisa2.jpg', categoria: 'camisas' },
-            { id: 3, nome: 'Barcelona 25/26', preco: 500.00, imagem: 'camisa3.jpg', categoria: 'camisas' },
-            { id: 4, nome: 'Manchester City 25/26', preco: 500.00, imagem: 'camisa4.jpg', categoria: 'camisas' },
-            { id: 5, nome: 'Atletico de Madrid 25/26', preco: 500.00, imagem: 'camisa5.jpg', categoria: 'camisas' },
-            { id: 6, nome: 'Sporting 25/26', preco: 500.00, imagem: 'camisa6.jpg', categoria: 'camisas' },
-            { id: 7, nome: 'Benfica 25/26', preco: 500.00, imagem: 'camisa7.jpg', categoria: 'camisas' },
-            { id: 8, nome: 'Benfica 25/26', preco: 500.00, imagem: 'camisa8.jpg', categoria: 'camisas' },
-            { id: 15, nome: 'Chelsea Casa 25/26', preco: 500.00, imagem: 'camisa9.jpg', categoria: 'camisas' },
-            { id: 16, nome: 'Porto FC Casa 25/26', preco: 500.00, imagem: 'camisa10.jpg', categoria: 'camisas' },
-            
-            // Meias (1)
-            { id: 19, nome: 'Meia Antiderrapante', preco: 500.00, imagem: 'meia1.jpg', categoria: 'meias' },
-            
-            // Bolas (4)
-            { id: 9, nome: 'Bola de Futebol', preco: 3500.00, imagem: 'bola1.jpg', categoria: 'bolas' },
-            { id: 10, nome: 'Bola de Futebol', preco: 3500.00, imagem: 'bola2.jpg', categoria: 'bolas' },
-            { id: 11, nome: 'Bola de Futebol', preco: 3500.00, imagem: 'bola3.jpg', categoria: 'bolas' },
-            { id: 12, nome: 'Bola de Futebol', preco: 3500.00, imagem: 'bola4.jpg', categoria: 'bolas' },
-            
-            // Chuteiras (2)
-            { id: 13, nome: 'Chuteira Elite FG', preco: 2500.00, imagem: 'chuteira1.jpg', categoria: 'chuteiras' },
-            { id: 14, nome: 'Chuteira Pro SG', preco: 2500.00, imagem: 'chuteira2.jpg', categoria: 'chuteiras' },
-            
-            // Caneleiras (2)
-            { id: 17, nome: 'Caneleira Y888', preco: 700.00, imagem: 'caneleira1.jpg', categoria: 'caneleiras' },
-            { id: 18, nome: 'Caneleira Simples', preco: 500.00, imagem: 'caneleira2.jpg', categoria: 'caneleiras' }
-        ];
+// ===== TODOS OS PRODUTOS COM CAMINHOS CORRIGIDOS =====
+const produtos = [
+    // Camisas (10)
+    { id: 1, nome: 'Liverpool 25/26', preco: 500.00, imagem: 'camisa1.jpg', categoria: 'camisas' },
+    { id: 2, nome: 'Real Madrid 25/26', preco: 500.00, imagem: 'camisa2.jpg', categoria: 'camisas' },
+    { id: 3, nome: 'Barcelona 25/26', preco: 500.00, imagem: 'camisa3.jpg', categoria: 'camisas' },
+    { id: 4, nome: 'Manchester City 25/26', preco: 500.00, imagem: 'camisa4.jpg', categoria: 'camisas' },
+    { id: 5, nome: 'Atletico de Madrid 25/26', preco: 500.00, imagem: 'camisa5.jpg', categoria: 'camisas' },
+    { id: 6, nome: 'Sporting 25/26', preco: 500.00, imagem: 'camisa6.jpg', categoria: 'camisas' },
+    { id: 7, nome: 'Benfica 25/26', preco: 500.00, imagem: 'camisa7.jpg', categoria: 'camisas' },
+    { id: 8, nome: 'Benfica 25/26', preco: 500.00, imagem: 'camisa8.jpg', categoria: 'camisas' },
+    { id: 15, nome: 'Chelsea Casa 25/26', preco: 500.00, imagem: 'camisa9.jpg', categoria: 'camisas' },
+    { id: 16, nome: 'Porto FC Casa 25/26', preco: 500.00, imagem: 'camisa10.jpg', categoria: 'camisas' },
+    
+    // Meias (1)
+    { id: 19, nome: 'Meia Antiderrapante', preco: 500.00, imagem: 'meia1.jpg', categoria: 'meias' },
+    
+    // Bolas (4)
+    { id: 9, nome: 'Bola de Futebol', preco: 3500.00, imagem: 'bola1.jpg', categoria: 'bolas' },
+    { id: 10, nome: 'Bola de Futebol', preco: 3500.00, imagem: 'bola2.jpg', categoria: 'bolas' },
+    { id: 11, nome: 'Bola de Futebol', preco: 3500.00, imagem: 'bola3.jpg', categoria: 'bolas' },
+    { id: 12, nome: 'Bola de Futebol', preco: 3500.00, imagem: 'bola4.jpg', categoria: 'bolas' },
+    
+    // Chuteiras (2)
+    { id: 13, nome: 'Chuteira Elite FG', preco: 2500.00, imagem: 'chuteira1.jpg', categoria: 'chuteiras' },
+    { id: 14, nome: 'Chuteira Pro SG', preco: 2500.00, imagem: 'chuteira2.jpg', categoria: 'chuteiras' },
+    
+    // Caneleiras (2)
+    { id: 17, nome: 'Caneleira Y888', preco: 700.00, imagem: 'caneleira1.jpg', categoria: 'caneleiras' },
+    { id: 18, nome: 'Caneleira Simples', preco: 500.00, imagem: 'caneleira2.jpg', categoria: 'caneleiras' },
+    
+    // Luvas de guarda-redes (1) - CORRIGIDO
+    { id: 20, nome: 'Luvas de guarda-redes', preco: 1200.00, imagem: 'luvas1.jpg', categoria: 'luvas' }
+];
 
         let carrinho = [];
         let produtoSelecionado = null;
