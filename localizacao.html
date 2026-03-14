@@ -4,10 +4,334 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Localização - Pretholas</title>
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Estilos específicos para página de localização */
+        /* ===== RESET E CONFIGURAÇÕES GLOBAIS ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --verde-principal: #2e7d32;
+            --verde-claro: #4caf50;
+            --verde-escuro: #1b5e20;
+            --branco: #ffffff;
+            --cinza: #f5f5f5;
+            --cinza-escuro: #666;
+            --cinza-borda: #ddd;
+            --preto: #212121;
+        }
+
+        body {
+            background-color: var(--branco);
+            color: var(--preto);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ===== HEADER VERDE FIXO (MESMO DO INDEX) ===== */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--verde-principal);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .menu-toggle {
+            cursor: pointer;
+            color: var(--branco);
+            font-size: 1.5rem;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+            border-radius: 5px;
+        }
+
+        .menu-toggle:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--branco);
+            letter-spacing: 2px;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--branco);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+            border-radius: 5px;
+        }
+
+        .cart-icon:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: var(--branco);
+            color: var(--verde-principal);
+            font-size: 0.7rem;
+            font-weight: 600;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ===== MENU LATERAL ===== */
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 280px;
+            height: 100vh;
+            background-color: var(--branco);
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            transition: left 0.3s ease;
+            z-index: 1002;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .side-menu.active {
+            left: 0;
+        }
+
+        .side-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid var(--cinza-borda);
+        }
+
+        .side-menu-header h3 {
+            color: var(--verde-principal);
+        }
+
+        .close-menu {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--cinza-escuro);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+        }
+
+        .close-menu:hover {
+            background-color: var(--cinza);
+        }
+
+        .side-menu-items {
+            list-style: none;
+            padding: 20px 0;
+            flex: 1;
+        }
+
+        .side-menu-items li a {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            text-decoration: none;
+            color: var(--preto);
+            transition: all 0.3s;
+        }
+
+        .side-menu-items li a:hover {
+            background-color: var(--cinza);
+            color: var(--verde-principal);
+        }
+
+        .side-menu-items li a i {
+            width: 20px;
+            color: var(--verde-principal);
+        }
+
+        .side-menu-items li a.active {
+            background-color: var(--cinza);
+            color: var(--verde-principal);
+            font-weight: 600;
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1001;
+            display: none;
+        }
+
+        .menu-overlay.active {
+            display: block;
+        }
+
+        /* ===== CARRINHO DROPDOWN ===== */
+        .cart-dropdown {
+            position: absolute;
+            top: 70px;
+            right: 20px;
+            width: 350px;
+            background-color: var(--branco);
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            z-index: 1001;
+            display: none;
+        }
+
+        .cart-dropdown.active {
+            display: block;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--cinza-borda);
+        }
+
+        .cart-header h3 {
+            color: var(--verde-principal);
+            font-size: 1rem;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--cinza-escuro);
+        }
+
+        .cart-items {
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .cart-empty {
+            text-align: center;
+            color: var(--cinza-escuro);
+            padding: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border-bottom: 1px solid var(--cinza-borda);
+        }
+
+        .cart-item-img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .cart-item-price {
+            color: var(--verde-principal);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .cart-item-remove {
+            color: #ff4444;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .cart-footer {
+            padding: 15px 20px;
+            border-top: 1px solid var(--cinza-borda);
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .btn-checkout {
+            width: 100%;
+            background-color: var(--verde-principal);
+            color: var(--branco);
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-checkout:hover {
+            background-color: var(--verde-escuro);
+        }
+
+        /* ===== ESTILOS ESPECÍFICOS DA PÁGINA DE LOCALIZAÇÃO ===== */
         .page-header {
             margin-top: 70px;
             background: linear-gradient(135deg, var(--verde-principal), var(--verde-escuro));
@@ -26,7 +350,6 @@
             opacity: 0.9;
         }
 
-        /* Seção de localização */
         .localizacao-completa {
             padding: 60px 0;
         }
@@ -105,7 +428,8 @@
             text-decoration: underline;
         }
 
-        .mapa-card {
+        /* Card de imagem (substituiu o mapa) */
+        .imagem-card {
             background-color: var(--branco);
             border-radius: 10px;
             overflow: hidden;
@@ -113,7 +437,7 @@
             border: 1px solid var(--cinza-borda);
         }
 
-        .mapa-card h2 {
+        .imagem-card h2 {
             color: var(--verde-principal);
             font-size: 1.8rem;
             margin-bottom: 30px;
@@ -123,7 +447,7 @@
             padding-top: 30px;
         }
 
-        .mapa-card h2::after {
+        .imagem-card h2::after {
             content: '';
             position: absolute;
             left: 20px;
@@ -133,17 +457,23 @@
             background-color: var(--verde-principal);
         }
 
-        .mapa-container {
+        .imagem-container {
             width: 100%;
             height: 450px;
-            border-radius: 0 0 10px 10px;
-            overflow: hidden;
+            background: linear-gradient(135deg, var(--verde-claro), var(--verde-escuro));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--branco);
+            font-size: 1.5rem;
+            text-align: center;
+            padding: 20px;
         }
 
-        .mapa-container iframe {
-            width: 100%;
-            height: 100%;
-            border: 0;
+        .imagem-container i {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            display: block;
         }
 
         .horario-card {
@@ -197,18 +527,121 @@
             transform: translateY(-2px);
         }
 
+        /* ===== FOOTER ===== */
+        footer {
+            background-color: var(--preto);
+            color: var(--branco);
+            padding: 60px 0 0;
+            margin-top: 40px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+            color: var(--branco);
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--verde-principal);
+        }
+
+        .footer-col p {
+            color: #bbb;
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--verde-principal);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background-color: #333;
+            color: var(--branco);
+            border-radius: 50%;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background-color: var(--verde-principal);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid #333;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* ===== RESPONSIVIDADE ===== */
         @media (max-width: 768px) {
             .localizacao-grid {
                 grid-template-columns: 1fr;
                 gap: 30px;
             }
 
-            .info-card, .mapa-card {
+            .info-card, .imagem-card {
                 padding: 20px;
             }
 
             .horario-card {
                 grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cart-dropdown {
+                width: calc(100% - 20px);
+                right: 10px;
+            }
+            
+            .logo h1 {
+                font-size: 1.4rem;
             }
         }
     </style>
@@ -238,7 +671,7 @@
         </div>
         <ul class="side-menu-items">
             <li><a href="index.html"><i class="fas fa-home"></i> HOME</a></li>
-            <li><a href="produtos.html"><i class="fas fa-tshirt"></i> PRODUTOS</a></li>
+            <li><a href="index.html"><i class="fas fa-tshirt"></i> PRODUTOS</a></li> <!-- Link para index -->
             <li><a href="sobre.html"><i class="fas fa-info-circle"></i> SOBRE</a></li>
             <li><a href="localizacao.html" class="active"><i class="fas fa-map-marker-alt"></i> LOCALIZAÇÃO</a></li>
         </ul>
@@ -322,11 +755,14 @@
                     </a>
                 </div>
 
-                <!-- Mapa -->
-                <div class="mapa-card">
-                    <h2>MAPA</h2>
-                    <div class="mapa-container">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15802.123456789!2d40.123456!3d-12.123456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTLCsDA3JzI0LjQiUyA0MMKwMDgnMjQuMCJF!5e0!3m2!1spt-PT!2smz!4v1234567890" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                <!-- Imagem ilustrativa (substituiu o mapa) -->
+                <div class="imagem-card">
+                    <h2>NOSSA LOJA</h2>
+                    <div class="imagem-container">
+                        <div>
+                            <i class="fas fa-store"></i>
+                            <p>Pretholas - Emulação, NATITE<br>Pemba, Cabo Delgado</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -368,7 +804,7 @@
                 <h3>LINKS</h3>
                 <ul>
                     <li><a href="index.html">HOME</a></li>
-                    <li><a href="produtos.html">PRODUTOS</a></li>
+                    <li><a href="index.html">PRODUTOS</a></li>
                     <li><a href="sobre.html">SOBRE</a></li>
                     <li><a href="localizacao.html">LOCALIZAÇÃO</a></li>
                 </ul>
@@ -379,12 +815,128 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
     <script>
+        // ===== VARIÁVEIS GLOBAIS =====
+        let carrinho = [];
+
+        // ===== FUNÇÕES DO CARRINHO =====
+        function carregarCarrinho() {
+            const salvo = localStorage.getItem('pretholas-carrinho');
+            if (salvo) {
+                carrinho = JSON.parse(salvo);
+                atualizarCarrinho();
+            }
+        }
+
+        function atualizarCarrinho() {
+            const totalItems = carrinho.reduce((total, item) => total + item.quantidade, 0);
+            document.getElementById('cartCount').textContent = totalItems;
+            
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            
+            if (carrinho.length === 0) {
+                cartItems.innerHTML = '<p class="cart-empty">Seu carrinho está vazio</p>';
+                cartTotal.textContent = '0.00MT';
+            } else {
+                let html = '';
+                let total = 0;
+                
+                carrinho.forEach(item => {
+                    total += item.preco * item.quantidade;
+                    html += `
+                        <div class="cart-item">
+                            <img src="${item.imagem}" alt="${item.nome}" class="cart-item-img" 
+                                 onerror="this.src='https://via.placeholder.com/50x50?text=Prod'">
+                            <div class="cart-item-info">
+                                <div class="cart-item-name">${item.nome}</div>
+                                <div class="cart-item-price">${item.preco.toFixed(2)}MT x ${item.quantidade}</div>
+                            </div>
+                            <i class="fas fa-trash cart-item-remove" onclick="removerDoCarrinho(${item.id})"></i>
+                        </div>
+                    `;
+                });
+                
+                cartItems.innerHTML = html;
+                cartTotal.textContent = total.toFixed(2) + 'MT';
+            }
+        }
+
+        function removerDoCarrinho(id) {
+            carrinho = carrinho.filter(item => item.id !== id);
+            atualizarCarrinho();
+            localStorage.setItem('pretholas-carrinho', JSON.stringify(carrinho));
+        }
+
+        function checkout() {
+            if (carrinho.length === 0) {
+                alert('Seu carrinho está vazio!');
+                return;
+            }
+            
+            let msg = "🛒 *NOVO PEDIDO - PRETHOLAS* 🛒\n\n";
+            carrinho.forEach(item => {
+                msg += `${item.nome} - ${item.preco.toFixed(2)}MT x ${item.quantidade}\n`;
+            });
+            const total = carrinho.reduce((acc, item) => acc + (item.preco * item.quantidade), 0);
+            msg += `\n*Total: ${total.toFixed(2)}MT*`;
+            
+            window.open(`https://wa.me/258852158504?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        // ===== FUNÇÕES DO MENU =====
+        function initMenu() {
+            const menuToggle = document.getElementById('menuToggle');
+            const sideMenu = document.getElementById('sideMenu');
+            const menuOverlay = document.getElementById('menuOverlay');
+            const closeMenu = document.getElementById('closeMenu');
+            
+            if (!menuToggle || !sideMenu || !menuOverlay || !closeMenu) return;
+            
+            menuToggle.addEventListener('click', () => {
+                sideMenu.classList.add('active');
+                menuOverlay.classList.add('active');
+            });
+            
+            closeMenu.addEventListener('click', () => {
+                sideMenu.classList.remove('active');
+                menuOverlay.classList.remove('active');
+            });
+            
+            menuOverlay.addEventListener('click', () => {
+                sideMenu.classList.remove('active');
+                menuOverlay.classList.remove('active');
+            });
+        }
+
+        function initCart() {
+            const cartToggle = document.getElementById('cartToggle');
+            const cartDropdown = document.getElementById('cartDropdown');
+            const closeCart = document.getElementById('closeCart');
+            
+            if (!cartToggle || !cartDropdown || !closeCart) return;
+            
+            cartToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                cartDropdown.classList.toggle('active');
+            });
+            
+            closeCart.addEventListener('click', () => {
+                cartDropdown.classList.remove('active');
+            });
+            
+            document.addEventListener('click', (e) => {
+                if (!cartDropdown.contains(e.target) && !cartToggle.contains(e.target)) {
+                    cartDropdown.classList.remove('active');
+                }
+            });
+        }
+
+        // ===== INICIALIZAÇÃO =====
         document.addEventListener('DOMContentLoaded', function() {
-            if (typeof carregarCarrinho === 'function') carregarCarrinho();
-            if (typeof initMenu === 'function') initMenu();
-            if (typeof initCart === 'function') initCart();
+            carregarCarrinho();
+            initMenu();
+            initCart();
         });
     </script>
 </body>
