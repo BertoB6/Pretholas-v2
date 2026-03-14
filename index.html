@@ -1011,6 +1011,31 @@
     </footer>
 
     <script>
+        // Adicione no início do JavaScript
+function verificarImagens() {
+    console.log('Verificando imagens...');
+    const imagens = [
+        'camisa1.jpg', 'camisa2.jpg', 'camisa3.jpg', 'camisa4.jpg',
+        'camisa5.jpg', 'camisa6.jpg', 'camisa7.jpg', 'camisa8.jpg',
+        'camisa9.jpg', 'camisa10.jpg', 'bola1.jpg', 'bola2.jpg',
+        'bola3.jpg', 'bola4.jpg', 'chuteira1.jpg', 'chuteira2.jpg',
+        'caneleira1.jpg', 'caneleira2.jpg', 'meia1.jpg'
+    ];
+    
+    imagens.forEach(img => {
+        let test = new Image();
+        test.onload = () => console.log(`✅ ${img} - OK`);
+        test.onerror = () => console.log(`❌ ${img} - FALTANDO`);
+        test.src = `images/${img}`;
+    });
+}
+
+// Chame a função no DOMContentLoaded
+document.addEventListener('DOMContentLoaded', function() {
+    verificarImagens(); // Adicione esta linha
+    renderizarProdutos(produtos);
+    // ... resto do código
+});
         // ===== TODOS OS PRODUTOS =====
         const produtos = [
             // Camisas (10) - PRIMEIRO
