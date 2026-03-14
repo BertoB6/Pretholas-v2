@@ -4,10 +4,410 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Produtos - Pretholas</title>
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Estilos específicos para página de produtos */
+        /* ===== RESET E CONFIGURAÇÕES GLOBAIS ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --verde-principal: #2e7d32;
+            --verde-claro: #4caf50;
+            --verde-escuro: #1b5e20;
+            --branco: #ffffff;
+            --cinza: #f5f5f5;
+            --cinza-escuro: #666;
+            --cinza-borda: #ddd;
+            --preto: #212121;
+        }
+
+        body {
+            background-color: var(--branco);
+            color: var(--preto);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ===== HEADER VERDE FIXO ===== */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--verde-principal);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .menu-toggle {
+            cursor: pointer;
+            color: var(--branco);
+            font-size: 1.5rem;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+            border-radius: 5px;
+        }
+
+        .menu-toggle:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--branco);
+            letter-spacing: 2px;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--branco);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+            border-radius: 5px;
+        }
+
+        .cart-icon:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: var(--branco);
+            color: var(--verde-principal);
+            font-size: 0.7rem;
+            font-weight: 600;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ===== MENU LATERAL ===== */
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 280px;
+            height: 100vh;
+            background-color: var(--branco);
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            transition: left 0.3s ease;
+            z-index: 1002;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .side-menu.active {
+            left: 0;
+        }
+
+        .side-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid var(--cinza-borda);
+        }
+
+        .side-menu-header h3 {
+            color: var(--verde-principal);
+        }
+
+        .close-menu {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--cinza-escuro);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+        }
+
+        .close-menu:hover {
+            background-color: var(--cinza);
+        }
+
+        .side-menu-items {
+            list-style: none;
+            padding: 20px 0;
+            flex: 1;
+        }
+
+        .side-menu-items li a {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            text-decoration: none;
+            color: var(--preto);
+            transition: all 0.3s;
+        }
+
+        .side-menu-items li a:hover {
+            background-color: var(--cinza);
+            color: var(--verde-principal);
+        }
+
+        .side-menu-items li a i {
+            width: 20px;
+            color: var(--verde-principal);
+        }
+
+        .side-menu-items li a.active {
+            background-color: var(--cinza);
+            color: var(--verde-principal);
+            font-weight: 600;
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1001;
+            display: none;
+        }
+
+        .menu-overlay.active {
+            display: block;
+        }
+
+        /* ===== CARRINHO DROPDOWN ===== */
+        .cart-dropdown {
+            position: absolute;
+            top: 70px;
+            right: 20px;
+            width: 350px;
+            background-color: var(--branco);
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            z-index: 1001;
+            display: none;
+        }
+
+        .cart-dropdown.active {
+            display: block;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--cinza-borda);
+        }
+
+        .cart-header h3 {
+            color: var(--verde-principal);
+            font-size: 1rem;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--cinza-escuro);
+        }
+
+        .cart-items {
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .cart-empty {
+            text-align: center;
+            color: var(--cinza-escuro);
+            padding: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border-bottom: 1px solid var(--cinza-borda);
+        }
+
+        .cart-item-img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .cart-item-price {
+            color: var(--verde-principal);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .cart-item-remove {
+            color: #ff4444;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .cart-footer {
+            padding: 15px 20px;
+            border-top: 1px solid var(--cinza-borda);
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .btn-checkout {
+            width: 100%;
+            background-color: var(--verde-principal);
+            color: var(--branco);
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-checkout:hover {
+            background-color: var(--verde-escuro);
+        }
+
+        /* ===== PRODUTOS GRID ===== */
+        .produtos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .produto-card {
+            background: var(--branco);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .produto-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .produto-img {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            overflow: hidden;
+        }
+
+        .produto-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .produto-card:hover .produto-img img {
+            transform: scale(1.05);
+        }
+
+        .produto-info {
+            padding: 15px;
+            text-align: center;
+        }
+
+        .produto-nome {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--preto);
+            margin-bottom: 8px;
+        }
+
+        .produto-preco {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--verde-principal);
+            margin-bottom: 15px;
+        }
+
+        .btn-comprar {
+            background-color: var(--verde-principal);
+            color: var(--branco);
+            border: none;
+            padding: 10px 0;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .btn-comprar:hover {
+            background-color: var(--verde-escuro);
+        }
+
+        /* ===== ESTILOS ESPECÍFICOS DA PÁGINA DE PRODUTOS ===== */
         .page-header {
             margin-top: 70px;
             background: linear-gradient(135deg, var(--verde-principal), var(--verde-escuro));
@@ -26,7 +426,6 @@
             opacity: 0.9;
         }
 
-        /* Filtros */
         .filtros-section {
             background-color: var(--cinza);
             padding: 30px 0;
@@ -67,7 +466,6 @@
             color: var(--branco);
         }
 
-        /* Seções de produtos */
         .categoria-section {
             padding: 40px 0;
             border-bottom: 1px solid var(--cinza-borda);
@@ -97,7 +495,6 @@
             border-radius: 5px;
         }
 
-        /* Mensagem de nenhum resultado */
         .no-results {
             text-align: center;
             padding: 60px 20px;
@@ -126,14 +523,137 @@
             display: none;
         }
 
-        /* Scroll suave */
         html {
             scroll-behavior: smooth;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background-color: var(--preto);
+            color: var(--branco);
+            padding: 60px 0 0;
+            margin-top: 40px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+            color: var(--branco);
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--verde-principal);
+        }
+
+        .footer-col p {
+            color: #bbb;
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--verde-principal);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background-color: #333;
+            color: var(--branco);
+            border-radius: 50%;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background-color: var(--verde-principal);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid #333;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* ===== RESPONSIVIDADE ===== */
+        @media (max-width: 768px) {
+            .produtos-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            
+            .categoria-titulo {
+                font-size: 1.5rem;
+            }
+            
+            .cart-dropdown {
+                width: 300px;
+                right: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cart-dropdown {
+                width: calc(100% - 20px);
+                right: 10px;
+            }
+            
+            .logo h1 {
+                font-size: 1.4rem;
+            }
+            
+            .filtro-btn {
+                min-width: 120px;
+                padding: 10px 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- HEADER (mesmo do index) -->
+    <!-- HEADER -->
     <header class="header">
         <div class="header-container">
             <div class="menu-toggle" id="menuToggle">
@@ -149,7 +669,7 @@
         </div>
     </header>
 
-    <!-- MENU LATERAL CORRIGIDO -->
+    <!-- MENU LATERAL -->
     <div class="side-menu" id="sideMenu">
         <div class="side-menu-header">
             <h3>MENU</h3>
@@ -193,10 +713,12 @@
             <button class="filtro-btn" onclick="filtrar('camisas')">CAMISAS</button>
             <button class="filtro-btn" onclick="filtrar('bolas')">BOLAS</button>
             <button class="filtro-btn" onclick="filtrar('chuteiras')">CHUTEIRAS</button>
+            <button class="filtro-btn" onclick="filtrar('caneleiras')">CANELEIRAS</button>
+            <button class="filtro-btn" onclick="filtrar('meias')">MEIAS</button>
         </div>
     </section>
 
-    <!-- PRODUTOS - CAMISAS (8) -->
+    <!-- PRODUTOS - CAMISAS (10 - incluindo Porto) -->
     <section class="categoria-section" id="camisas-section">
         <div class="container">
             <h2 class="categoria-titulo">CAMISAS DE CLUBE</h2>
@@ -221,12 +743,32 @@
         <div class="container">
             <h2 class="categoria-titulo">CHUTEIRAS</h2>
             <div class="produtos-grid" id="chuteiras-grid">
+                <!-- Será preenchido via JavaScript 
+    </div>
+        </div>
+    </section>
+
+    <!-- PRODUTOS - CANELEIRAS (2) -->
+    <section class="categoria-section" id="caneleiras-section">
+        <div class="container">
+            <h2 class="categoria-titulo">CANELEIRAS</h2>
+            <div class="produtos-grid" id="caneleiras-grid">
                 <!-- Será preenchido via JavaScript -->
             </div>
         </div>
     </section>
 
-    <!-- MENSAGEM DE NENHUM RESULTADO (oculta por padrão) -->
+    <!-- PRODUTOS - MEIAS (1) -->
+    <section class="categoria-section" id="meias-section">
+        <div class="container">
+            <h2 class="categoria-titulo">MEIAS ESPORTIVAS</h2>
+            <div class="produtos-grid" id="meias-grid">
+                <!-- Será preenchido via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- MENSAGEM DE NENHUM RESULTADO -->
     <div class="no-results hidden" id="noResults">
         <i class="fas fa-search"></i>
         <h3>Nenhum produto encontrado</h3>
@@ -260,9 +802,11 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
     <script>
-        // ===== DADOS COMPLETOS DOS PRODUTOS =====
+        // ===== VARIÁVEIS GLOBAIS =====
+        let carrinho = [];
+
+        // ===== DADOS COMPLETOS DOS PRODUTOS ATUALIZADOS =====
         const todosProdutos = {
             camisas: [
                 { id: 1, nome: 'Liverpool 25/26', preco: 500.00, imagem: 'camisa1.jpg' },
@@ -272,17 +816,26 @@
                 { id: 5, nome: 'Atletico de Madrid 25/26', preco: 500.00, imagem: 'camisa5.jpg' },
                 { id: 6, nome: 'Sporting 25/26', preco: 500.00, imagem: 'camisa6.jpg' },
                 { id: 7, nome: 'Benfica 25/26', preco: 500.00, imagem: 'camisa7.jpg' },
-                { id: 8, nome: 'Benfica Fora 25/26', preco: 500.00, imagem: 'camisa8.jpg' }
+                { id: 8, nome: 'Benfica Fora 25/26', preco: 500.00, imagem: 'camisa8.jpg' },
+                { id: 15, nome: 'Porto FC Casa 25/26', preco: 500.00, imagem: 'camisa9.jpg' },
+                { id: 16, nome: 'Porto FC Fora 25/26', preco: 500.00, imagem: 'camisa10.jpg' }
             ],
             bolas: [
-                { id: 9, nome: 'Bola de Futebol', preco: 3500.00, imagem: 'bola1.jpg' },
-                { id: 10, nome: 'Bola de Campo Oficial', preco: 3500.00, imagem: 'bola2.jpg' },
-                { id: 11, nome: 'Bola de Futebol', preco: 3500.00, imagem: 'bola3.jpg' },
+                { id: 9, nome: 'Bola de Futebol Campo', preco: 3500.00, imagem: 'bola1.jpg' },
+                { id: 10, nome: 'Bola de Futsal', preco: 2500.00, imagem: 'bola2.jpg' },
+                { id: 11, nome: 'Bola de Treino', preco: 2000.00, imagem: 'bola3.jpg' },
                 { id: 12, nome: 'Bola Society', preco: 3500.00, imagem: 'bola4.jpg' }
             ],
             chuteiras: [
                 { id: 13, nome: 'Chuteira Elite FG', preco: 2500.00, imagem: 'chuteira1.jpg' },
                 { id: 14, nome: 'Chuteira Pro SG', preco: 2500.00, imagem: 'chuteira2.jpg' }
+            ],
+            caneleiras: [
+                { id: 17, nome: 'Caneleira Profissional', preco: 500.00, imagem: 'caneleira1.jpg' },
+                { id: 18, nome: 'Caneleira Infantil', preco: 400.00, imagem: 'caneleira2.jpg' }
+            ],
+            meias: [
+                { id: 19, nome: 'Meia Antiderrapante', preco: 300.00, imagem: 'meia1.jpg' }
             ]
         };
 
@@ -294,7 +847,7 @@
             container.innerHTML = produtos.map(prod => `
                 <div class="produto-card">
                     <div class="produto-img">
-                        <img src="${prod.imagem}" alt="${prod.nome}" onerror="this.src='https://via.placeholder.com/300x225?text=Pretholas'">
+                        <img src="images/${prod.imagem}" alt="${prod.nome}" onerror="this.src='https://via.placeholder.com/300x225?text=Pretholas'">
                     </div>
                     <div class="produto-info">
                         <h3 class="produto-nome">${prod.nome}</h3>
@@ -313,80 +866,49 @@
             });
             event.target.classList.add('active');
 
-            // Mostrar/esconder seções
-            const camisasSection = document.getElementById('camisas-section');
-            const bolasSection = document.getElementById('bolas-section');
-            const chuteirasSection = document.getElementById('chuteiras-section');
-            const noResults = document.getElementById('noResults');
+            // Seções
+            const secoes = {
+                camisas: document.getElementById('camisas-section'),
+                bolas: document.getElementById('bolas-section'),
+                chuteiras: document.getElementById('chuteiras-section'),
+                caneleiras: document.getElementById('caneleiras-section'),
+                meias: document.getElementById('meias-section')
+            };
 
-            // Resetar visibilidade
-            camisasSection.style.display = 'block';
-            bolasSection.style.display = 'block';
-            chuteirasSection.style.display = 'block';
-            noResults.classList.add('hidden');
+            // Esconder todas
+            Object.values(secoes).forEach(secao => {
+                if (secao) secao.style.display = 'none';
+            });
 
             if (categoria === 'todos') {
-                // Mostrar todas as seções
-                camisasSection.style.display = 'block';
-                bolasSection.style.display = 'block';
-                chuteirasSection.style.display = 'block';
-            } else if (categoria === 'camisas') {
-                camisasSection.style.display = 'block';
-                bolasSection.style.display = 'none';
-                chuteirasSection.style.display = 'none';
-            } else if (categoria === 'bolas') {
-                camisasSection.style.display = 'none';
-                bolasSection.style.display = 'block';
-                chuteirasSection.style.display = 'none';
-            } else if (categoria === 'chuteiras') {
-                camisasSection.style.display = 'none';
-                bolasSection.style.display = 'none';
-                chuteirasSection.style.display = 'block';
+                // Mostrar todas
+                Object.values(secoes).forEach(secao => {
+                    if (secao) secao.style.display = 'block';
+                });
+            } else if (categoria === 'camisas' && secoes.camisas) {
+                secoes.camisas.style.display = 'block';
+            } else if (categoria === 'bolas' && secoes.bolas) {
+                secoes.bolas.style.display = 'block';
+            } else if (categoria === 'chuteiras' && secoes.chuteiras) {
+                secoes.chuteiras.style.display = 'block';
+            } else if (categoria === 'caneleiras' && secoes.caneleiras) {
+                secoes.caneleiras.style.display = 'block';
+            } else if (categoria === 'meias' && secoes.meias) {
+                secoes.meias.style.display = 'block';
             }
 
-            // Scroll suave para o topo da seção
+            // Scroll suave
             document.querySelector('.filtros-section').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // ===== INICIALIZAÇÃO =====
-        document.addEventListener('DOMContentLoaded', function() {
-            // Renderizar todas as categorias
-            renderizarCards(todosProdutos.camisas, 'camisas-grid');
-            renderizarCards(todosProdutos.bolas, 'bolas-grid');
-            renderizarCards(todosProdutos.chuteiras, 'chuteiras-grid');
-
-            // Inicializar funções do carrinho (do script.js global)
-            if (typeof carregarCarrinho === 'function') {
-                carregarCarrinho();
-            }
-            
-            // Inicializar menu
-            if (typeof initMenu === 'function') {
-                initMenu();
-            }
-            
-            // Inicializar carrinho dropdown
-            if (typeof initCart === 'function') {
-                initCart();
-            }
-        });
-
-        // ===== FUNÇÃO DE ADICIONAR AO CARRINHO (usando dados completos) =====
+        // ===== FUNÇÕES DO CARRINHO =====
         function adicionarAoCarrinho(id) {
-            // Buscar produto em todas as categorias
             let produto = null;
             
-            // Procurar nas camisas
-            produto = todosProdutos.camisas.find(p => p.id === id);
-            
-            // Se não encontrou, procurar nas bolas
-            if (!produto) {
-                produto = todosProdutos.bolas.find(p => p.id === id);
-            }
-            
-            // Se não encontrou, procurar nas chuteiras
-            if (!produto) {
-                produto = todosProdutos.chuteiras.find(p => p.id === id);
+            // Buscar em todas as categorias
+            for (let categoria in todosProdutos) {
+                produto = todosProdutos[categoria].find(p => p.id === id);
+                if (produto) break;
             }
             
             if (!produto) return;
@@ -408,6 +930,132 @@
             atualizarCarrinho();
             alert(`${produto.nome} adicionado ao carrinho!`);
         }
+
+        function atualizarCarrinho() {
+            const totalItems = carrinho.reduce((total, item) => total + item.quantidade, 0);
+            document.getElementById('cartCount').textContent = totalItems;
+            
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            
+            if (carrinho.length === 0) {
+                cartItems.innerHTML = '<p class="cart-empty">Seu carrinho está vazio</p>';
+                cartTotal.textContent = '0.00MT';
+            } else {
+                let html = '';
+                let total = 0;
+                
+                carrinho.forEach(item => {
+                    total += item.preco * item.quantidade;
+                    html += `
+                        <div class="cart-item">
+                            <img src="images/${item.imagem}" alt="${item.nome}" class="cart-item-img" onerror="this.src='https://via.placeholder.com/50x50?text=Prod'">
+                            <div class="cart-item-info">
+                                <div class="cart-item-name">${item.nome}</div>
+                                <div class="cart-item-price">${item.preco.toFixed(2)}MT x ${item.quantidade}</div>
+                            </div>
+                            <i class="fas fa-trash cart-item-remove" onclick="removerDoCarrinho(${item.id})"></i>
+                        </div>
+                    `;
+                });
+                
+                cartItems.innerHTML = html;
+                cartTotal.textContent = total.toFixed(2) + 'MT';
+            }
+            
+            localStorage.setItem('pretholas-carrinho', JSON.stringify(carrinho));
+        }
+
+        function removerDoCarrinho(id) {
+            carrinho = carrinho.filter(item => item.id !== id);
+            atualizarCarrinho();
+        }
+
+        function carregarCarrinho() {
+            const salvo = localStorage.getItem('pretholas-carrinho');
+            if (salvo) {
+                carrinho = JSON.parse(salvo);
+                atualizarCarrinho();
+            }
+        }
+
+        function checkout() {
+            if (carrinho.length === 0) {
+                alert('Seu carrinho está vazio!');
+                return;
+            }
+            
+            let msg = "🛒 *NOVO PEDIDO - PRETHOLAS* 🛒\n\n";
+            carrinho.forEach(item => {
+                msg += `${item.nome} - ${item.preco.toFixed(2)}MT x ${item.quantidade}\n`;
+            });
+            const total = carrinho.reduce((acc, item) => acc + (item.preco * item.quantidade), 0);
+            msg += `\n*Total: ${total.toFixed(2)}MT*`;
+            
+            window.open(`https://wa.me/258852158504?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        // ===== FUNÇÕES DO MENU =====
+        function initMenu() {
+            const menuToggle = document.getElementById('menuToggle');
+            const sideMenu = document.getElementById('sideMenu');
+            const menuOverlay = document.getElementById('menuOverlay');
+            const closeMenu = document.getElementById('closeMenu');
+            
+            if (!menuToggle || !sideMenu || !menuOverlay || !closeMenu) return;
+            
+            menuToggle.addEventListener('click', () => {
+                sideMenu.classList.add('active');
+                menuOverlay.classList.add('active');
+            });
+            
+            closeMenu.addEventListener('click', () => {
+                sideMenu.classList.remove('active');
+                menuOverlay.classList.remove('active');
+            });
+            
+            menuOverlay.addEventListener('click', () => {
+                sideMenu.classList.remove('active');
+                menuOverlay.classList.remove('active');
+            });
+        }
+
+        function initCart() {
+            const cartToggle = document.getElementById('cartToggle');
+            const cartDropdown = document.getElementById('cartDropdown');
+            const closeCart = document.getElementById('closeCart');
+            
+            if (!cartToggle || !cartDropdown || !closeCart) return;
+            
+            cartToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                cartDropdown.classList.toggle('active');
+            });
+            
+            closeCart.addEventListener('click', () => {
+                cartDropdown.classList.remove('active');
+            });
+            
+            document.addEventListener('click', (e) => {
+                if (!cartDropdown.contains(e.target) && !cartToggle.contains(e.target)) {
+                    cartDropdown.classList.remove('active');
+                }
+            });
+        }
+
+        // ===== INICIALIZAÇÃO =====
+        document.addEventListener('DOMContentLoaded', function() {
+            // Renderizar todas as categorias
+            renderizarCards(todosProdutos.camisas, 'camisas-grid');
+            renderizarCards(todosProdutos.bolas, 'bolas-grid');
+            renderizarCards(todosProdutos.chuteiras, 'chuteiras-grid');
+            renderizarCards(todosProdutos.caneleiras, 'caneleiras-grid');
+            renderizarCards(todosProdutos.meias, 'meias-grid');
+
+            carregarCarrinho();
+            initMenu();
+            initCart();
+        });
     </script>
 </body>
-</html>
+                </html>
