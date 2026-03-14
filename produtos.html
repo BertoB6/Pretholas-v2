@@ -6,7 +6,7 @@
     <title>Produtos - Pretholas</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* ===== RESET E CONFIGURAÇÕES GLOBAIS ===== */
+        /* ===== TODO O CSS ANTERIOR AQUI (MESMO QUE VOCÊ JÁ TEM) ===== */
         * {
             margin: 0;
             padding: 0;
@@ -38,7 +38,6 @@
             padding: 0 20px;
         }
 
-        /* ===== HEADER VERDE FIXO ===== */
         .header {
             position: fixed;
             top: 0;
@@ -117,7 +116,6 @@
             justify-content: center;
         }
 
-        /* ===== MENU LATERAL ===== */
         .side-menu {
             position: fixed;
             top: 0;
@@ -213,7 +211,6 @@
             display: block;
         }
 
-        /* ===== CARRINHO DROPDOWN ===== */
         .cart-dropdown {
             position: absolute;
             top: 70px;
@@ -331,7 +328,6 @@
             background-color: var(--verde-escuro);
         }
 
-        /* ===== PRODUTOS GRID ===== */
         .produtos-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -407,29 +403,11 @@
             background-color: var(--verde-escuro);
         }
 
-        /* ===== ESTILOS ESPECÍFICOS DA PÁGINA DE PRODUTOS ===== */
-        .page-header {
-            margin-top: 70px;
-            background: linear-gradient(135deg, var(--verde-principal), var(--verde-escuro));
-            color: var(--branco);
-            padding: 40px 0;
-            text-align: center;
-        }
-
-        .page-header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-
-        .page-header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
         .filtros-section {
             background-color: var(--cinza);
             padding: 30px 0;
             border-bottom: 1px solid var(--cinza-borda);
+            margin-top: 70px;
         }
 
         .filtros-container {
@@ -495,39 +473,6 @@
             border-radius: 5px;
         }
 
-        .no-results {
-            text-align: center;
-            padding: 60px 20px;
-            background-color: var(--cinza);
-            border-radius: 10px;
-            margin: 40px 0;
-        }
-
-        .no-results i {
-            font-size: 4rem;
-            color: var(--cinza-escuro);
-            margin-bottom: 20px;
-        }
-
-        .no-results h3 {
-            font-size: 1.5rem;
-            color: var(--cinza-escuro);
-            margin-bottom: 10px;
-        }
-
-        .no-results p {
-            color: var(--cinza-escuro);
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* ===== FOOTER ===== */
         footer {
             background-color: var(--preto);
             color: var(--branco);
@@ -618,7 +563,6 @@
             font-size: 0.9rem;
         }
 
-        /* ===== RESPONSIVIDADE ===== */
         @media (max-width: 768px) {
             .produtos-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -718,13 +662,11 @@
         </div>
     </section>
 
-    <!-- PRODUTOS - CAMISAS (10 - incluindo Porto) -->
+    <!-- PRODUTOS - CAMISAS (10) -->
     <section class="categoria-section" id="camisas-section">
         <div class="container">
             <h2 class="categoria-titulo">CAMISAS DE CLUBE</h2>
-            <div class="produtos-grid" id="camisas-grid">
-                <!-- Será preenchido via JavaScript -->
-            </div>
+            <div class="produtos-grid" id="camisas-grid"></div>
         </div>
     </section>
 
@@ -732,9 +674,7 @@
     <section class="categoria-section" id="bolas-section">
         <div class="container">
             <h2 class="categoria-titulo">BOLAS</h2>
-            <div class="produtos-grid" id="bolas-grid">
-                <!-- Será preenchido via JavaScript -->
-            </div>
+            <div class="produtos-grid" id="bolas-grid"></div>
         </div>
     </section>
 
@@ -742,9 +682,7 @@
     <section class="categoria-section" id="chuteiras-section">
         <div class="container">
             <h2 class="categoria-titulo">CHUTEIRAS</h2>
-            <div class="produtos-grid" id="chuteiras-grid">
-                <!-- Será preenchido via JavaScript 
-    </div>
+            <div class="produtos-grid" id="chuteiras-grid"></div>
         </div>
     </section>
 
@@ -752,9 +690,7 @@
     <section class="categoria-section" id="caneleiras-section">
         <div class="container">
             <h2 class="categoria-titulo">CANELEIRAS</h2>
-            <div class="produtos-grid" id="caneleiras-grid">
-                <!-- Será preenchido via JavaScript -->
-            </div>
+            <div class="produtos-grid" id="caneleiras-grid"></div>
         </div>
     </section>
 
@@ -762,18 +698,9 @@
     <section class="categoria-section" id="meias-section">
         <div class="container">
             <h2 class="categoria-titulo">MEIAS ESPORTIVAS</h2>
-            <div class="produtos-grid" id="meias-grid">
-                <!-- Será preenchido via JavaScript -->
-            </div>
+            <div class="produtos-grid" id="meias-grid"></div>
         </div>
     </section>
-
-    <!-- MENSAGEM DE NENHUM RESULTADO -->
-    <div class="no-results hidden" id="noResults">
-        <i class="fas fa-search"></i>
-        <h3>Nenhum produto encontrado</h3>
-        <p>Tente outro filtro ou categoria</p>
-    </div>
 
     <!-- FOOTER -->
     <footer>
@@ -806,7 +733,7 @@
         // ===== VARIÁVEIS GLOBAIS =====
         let carrinho = [];
 
-        // ===== DADOS COMPLETOS DOS PRODUTOS ATUALIZADOS =====
+        // ===== DADOS COMPLETOS DOS PRODUTOS =====
         const todosProdutos = {
             camisas: [
                 { id: 1, nome: 'Liverpool 25/26', preco: 500.00, imagem: 'camisa1.jpg' },
@@ -817,8 +744,8 @@
                 { id: 6, nome: 'Sporting 25/26', preco: 500.00, imagem: 'camisa6.jpg' },
                 { id: 7, nome: 'Benfica 25/26', preco: 500.00, imagem: 'camisa7.jpg' },
                 { id: 8, nome: 'Benfica Fora 25/26', preco: 500.00, imagem: 'camisa8.jpg' },
-                { id: 15, nome: 'Porto FC Casa 25/26', preco: 500.00, imagem: 'images/camisa9.jpg' },
-                { id: 16, nome: 'Porto FC Fora 25/26', preco: 500.00, imagem: 'images/camisa10.jpg' }
+                { id: 15, nome: 'Porto FC Casa 25/26', preco: 500.00, imagem: 'camisa9.jpg' },
+                { id: 16, nome: 'Porto FC Fora 25/26', preco: 500.00, imagem: 'camisa10.jpg' }
             ],
             bolas: [
                 { id: 9, nome: 'Bola de Futebol Campo', preco: 3500.00, imagem: 'bola1.jpg' },
@@ -831,15 +758,15 @@
                 { id: 14, nome: 'Chuteira Pro SG', preco: 2500.00, imagem: 'chuteira2.jpg' }
             ],
             caneleiras: [
-                { id: 17, nome: 'Caneleira Profissional', preco: 500.00, imagem: 'images/caneleira1.jpg' },
-                { id: 18, nome: 'Caneleira Infantil', preco: 400.00, imagem: 'images/caneleira2.jpg' }
+                { id: 17, nome: 'Caneleira Profissional', preco: 500.00, imagem: 'caneleira1.jpg' },
+                { id: 18, nome: 'Caneleira Infantil', preco: 400.00, imagem: 'caneleira2.jpg' }
             ],
             meias: [
-                { id: 19, nome: 'Meia Antiderrapante', preco: 300.00, imagem: 'images/meia1.jpg' }
+                { id: 19, nome: 'Meia Antiderrapante', preco: 300.00, imagem: 'meia1.jpg' }
             ]
         };
 
-        // ===== FUNÇÃO PARA RENDERIZAR CARDS =====
+        // ===== FUNÇÃO PARA RENDERIZAR CARDS (CORRIGIDA) =====
         function renderizarCards(produtos, containerId) {
             const container = document.getElementById(containerId);
             if (!container) return;
@@ -847,7 +774,8 @@
             container.innerHTML = produtos.map(prod => `
                 <div class="produto-card">
                     <div class="produto-img">
-                        <img src="images/${prod.imagem}" alt="${prod.nome}" onerror="this.src='https://via.placeholder.com/300x225?text=Pretholas'">
+                        <img src="images/${prod.imagem}" alt="${prod.nome}" 
+                             onerror="this.src='https://via.placeholder.com/300x225?text=${encodeURIComponent(prod.nome)}'">
                     </div>
                     <div class="produto-info">
                         <h3 class="produto-nome">${prod.nome}</h3>
@@ -885,20 +813,12 @@
                 Object.values(secoes).forEach(secao => {
                     if (secao) secao.style.display = 'block';
                 });
-            } else if (categoria === 'camisas' && secoes.camisas) {
-                secoes.camisas.style.display = 'block';
-            } else if (categoria === 'bolas' && secoes.bolas) {
-                secoes.bolas.style.display = 'block';
-            } else if (categoria === 'chuteiras' && secoes.chuteiras) {
-                secoes.chuteiras.style.display = 'block';
-            } else if (categoria === 'caneleiras' && secoes.caneleiras) {
-                secoes.caneleiras.style.display = 'block';
-            } else if (categoria === 'meias' && secoes.meias) {
-                secoes.meias.style.display = 'block';
+            } else {
+                // Mostrar apenas a seção selecionada
+                if (secoes[categoria]) {
+                    secoes[categoria].style.display = 'block';
+                }
             }
-
-            // Scroll suave
-            document.querySelector('.filtros-section').scrollIntoView({ behavior: 'smooth' });
         }
 
         // ===== FUNÇÕES DO CARRINHO =====
@@ -949,7 +869,8 @@
                     total += item.preco * item.quantidade;
                     html += `
                         <div class="cart-item">
-                            <img src="images/${item.imagem}" alt="${item.nome}" class="cart-item-img" onerror="this.src='https://via.placeholder.com/50x50?text=Prod'">
+                            <img src="images/${item.imagem}" alt="${item.nome}" class="cart-item-img" 
+                                 onerror="this.src='https://via.placeholder.com/50x50?text=Prod'">
                             <div class="cart-item-info">
                                 <div class="cart-item-name">${item.nome}</div>
                                 <div class="cart-item-price">${item.preco.toFixed(2)}MT x ${item.quantidade}</div>
@@ -1058,4 +979,4 @@
         });
     </script>
 </body>
-                </html>
+</html>
