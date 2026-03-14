@@ -83,6 +83,29 @@
             letter-spacing: 2px;
         }
 
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .search-icon {
+            cursor: pointer;
+            color: var(--branco);
+            font-size: 1.3rem;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+            border-radius: 5px;
+        }
+
+        .search-icon:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
         .cart-icon {
             position: relative;
             cursor: pointer;
@@ -450,161 +473,10 @@
             background-color: #128C7E;
         }
 
-        /* ===== BARRA DE PESQUISA COM CHECKBOX ===== */
-        .pesquisa-section {
-            margin-top: 70px;
-            padding: 20px 0;
-            background-color: var(--cinza);
-            border-bottom: 1px solid var(--cinza-borda);
-        }
-
-        .pesquisa-container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 0 20px;
-            position: relative;
-        }
-
-        .pesquisa-box {
-            display: flex;
-            align-items: center;
-            background-color: var(--branco);
-            border-radius: 50px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            cursor: pointer;
-        }
-
-        .pesquisa-box i {
-            padding: 0 20px;
-            color: var(--cinza-escuro);
-            font-size: 1.2rem;
-        }
-
-        #pesquisaToggle {
-            flex: 1;
-            padding: 15px;
-            border: none;
-            outline: none;
-            font-size: 1rem;
-            background: transparent;
-            cursor: pointer;
-            text-align: left;
-            color: var(--cinza-escuro);
-        }
-
-        #pesquisaToggle i {
-            float: right;
-            transition: transform 0.3s;
-        }
-
-        /* Formulário de categorias (checkbox) */
-        .categorias-form {
-            position: absolute;
-            top: 100%;
-            left: 20px;
-            right: 20px;
-            background-color: var(--branco);
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-            padding: 20px;
-            z-index: 100;
-            display: none;
-            margin-top: 10px;
-        }
-
-        .categorias-form.mostrar {
-            display: block;
-        }
-
-        .categorias-form h4 {
-            color: var(--verde-principal);
-            margin-bottom: 15px;
-            font-size: 1.1rem;
-            border-bottom: 1px solid var(--cinza-borda);
-            padding-bottom: 10px;
-        }
-
-        .checkbox-group {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .checkbox-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .checkbox-item input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            accent-color: var(--verde-principal);
-            cursor: pointer;
-        }
-
-        .checkbox-item label {
-            cursor: pointer;
-            font-weight: 500;
-            color: var(--preto);
-        }
-
-        .form-actions {
-            display: flex;
-            gap: 10px;
-            border-top: 1px solid var(--cinza-borda);
-            padding-top: 15px;
-        }
-
-        .btn-filtrar {
-            flex: 1;
-            background-color: var(--verde-principal);
-            color: var(--branco);
-            border: none;
-            padding: 12px;
-            border-radius: 5px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .btn-filtrar:hover {
-            background-color: var(--verde-escuro);
-        }
-
-        .btn-limpar {
-            flex: 1;
-            background-color: var(--cinza);
-            color: var(--preto);
-            border: none;
-            padding: 12px;
-            border-radius: 5px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .btn-limpar:hover {
-            background-color: var(--cinza-borda);
-        }
-
-        .resultado-info {
-            text-align: center;
-            margin: 20px 0;
-            font-size: 1rem;
-            color: var(--cinza-escuro);
-            display: none;
-        }
-
-        .resultado-info.mostrar {
-            display: block;
-        }
-
         /* ===== SEÇÃO DE PRODUTOS ===== */
         .destaques {
             padding: 40px 0;
+            margin-top: 70px;
         }
 
         .section-title {
@@ -843,14 +715,20 @@
                 font-size: 1.4rem;
             }
             
-            .checkbox-group {
-                grid-template-columns: 1fr;
+            .header-actions {
+                gap: 5px;
+            }
+            
+            .search-icon, .cart-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 1.1rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- HEADER -->
+    <!-- HEADER COM LUPA -->
     <header class="header">
         <div class="header-container">
             <div class="menu-toggle" id="menuToggle">
@@ -859,9 +737,14 @@
             <div class="logo">
                 <h1>PRETHOLAS</h1>
             </div>
-            <div class="cart-icon" id="cartToggle">
-                <i class="fas fa-shopping-cart"></i>
-                <span class="cart-count" id="cartCount">0</span>
+            <div class="header-actions">
+                <div class="search-icon" id="searchToggle">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="cart-icon" id="cartToggle">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
             </div>
         </div>
     </header>
@@ -925,51 +808,6 @@
         </div>
     </div>
 
-    <!-- BARRA DE PESQUISA COM CHECKBOX (AO CLICAR ABRE) -->
-    <section class="pesquisa-section">
-        <div class="pesquisa-container">
-            <div class="pesquisa-box" id="pesquisaBox">
-                <i class="fas fa-search"></i>
-                <div id="pesquisaToggle">
-                    Toque aqui para filtrar produtos <i class="fas fa-chevron-down"></i>
-                </div>
-            </div>
-            
-            <!-- Formulário de categorias (checkbox) -->
-            <div class="categorias-form" id="categoriasForm">
-                <h4>ESCOLHA AS CATEGORIAS:</h4>
-                <div class="checkbox-group">
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="catCamisas" value="camisas" checked>
-                        <label for="catCamisas">CAMISAS</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="catBolas" value="bolas" checked>
-                        <label for="catBolas">BOLAS</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="catChuteiras" value="chuteiras" checked>
-                        <label for="catChuteiras">CHUTEIRAS</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="catCaneleiras" value="caneleiras" checked>
-                        <label for="catCaneleiras">CANELEIRAS</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="catMeias" value="meias" checked>
-                        <label for="catMeias">MEIAS</label>
-                    </div>
-                </div>
-                <div class="form-actions">
-                    <button class="btn-filtrar" onclick="aplicarFiltro()">APLICAR FILTRO</button>
-                    <button class="btn-limpar" onclick="limparFiltro()">LIMPAR</button>
-                </div>
-            </div>
-            
-            <div class="resultado-info" id="resultadoInfo"></div>
-        </div>
-    </section>
-
     <!-- TODOS OS PRODUTOS -->
     <section class="destaques" id="produtos">
         <div class="container">
@@ -1011,10 +849,9 @@
     </footer>
 
     <script>
-
-        // ===== TODOS OS PRODUTOS =====
+        // ===== TODOS OS PRODUTOS COM CAMINHOS CORRIGIDOS =====
         const produtos = [
-            // Camisas (10) - PRIMEIRO
+            // Camisas (10)
             { id: 1, nome: 'Liverpool 25/26', preco: 500.00, imagem: 'camisa1.jpg', categoria: 'camisas' },
             { id: 2, nome: 'Real Madrid 25/26', preco: 500.00, imagem: 'camisa2.jpg', categoria: 'camisas' },
             { id: 3, nome: 'Barcelona 25/26', preco: 500.00, imagem: 'camisa3.jpg', categoria: 'camisas' },
@@ -1023,25 +860,25 @@
             { id: 6, nome: 'Sporting 25/26', preco: 500.00, imagem: 'camisa6.jpg', categoria: 'camisas' },
             { id: 7, nome: 'Benfica 25/26', preco: 500.00, imagem: 'camisa7.jpg', categoria: 'camisas' },
             { id: 8, nome: 'Benfica 25/26', preco: 500.00, imagem: 'camisa8.jpg', categoria: 'camisas' },
-            { id: 15, nome: 'Chelsea Casa 25/26', preco: 500.00, imagem: 'images/camisa9.jpg', categoria: 'camisas' },
-            { id: 16, nome: 'Porto FC Casa 25/26', preco: 500.00, imagem: 'images/camisa10.jpg', categoria: 'camisas' },
+            { id: 15, nome: 'Chelsea Casa 25/26', preco: 500.00, imagem: 'camisa9.jpg', categoria: 'camisas' },
+            { id: 16, nome: 'Porto FC Casa 25/26', preco: 500.00, imagem: 'camisa10.jpg', categoria: 'camisas' },
             
-            // Meias (1) - SEGUNDO
-            { id: 19, nome: 'Meia Antiderrapante', preco: 500.00, imagem: 'images/meia1.jpg', categoria: 'meias' },
+            // Meias (1)
+            { id: 19, nome: 'Meia Antiderrapante', preco: 500.00, imagem: 'meia1.jpg', categoria: 'meias' },
             
-            // Bolas (4) - TERCEIRO
+            // Bolas (4)
             { id: 9, nome: 'Bola de Futebol', preco: 3500.00, imagem: 'bola1.jpg', categoria: 'bolas' },
             { id: 10, nome: 'Bola de Futebol', preco: 3500.00, imagem: 'bola2.jpg', categoria: 'bolas' },
             { id: 11, nome: 'Bola de Futebol', preco: 3500.00, imagem: 'bola3.jpg', categoria: 'bolas' },
             { id: 12, nome: 'Bola de Futebol', preco: 3500.00, imagem: 'bola4.jpg', categoria: 'bolas' },
             
-            // Chuteiras (2) - QUARTO
+            // Chuteiras (2)
             { id: 13, nome: 'Chuteira Elite FG', preco: 2500.00, imagem: 'chuteira1.jpg', categoria: 'chuteiras' },
             { id: 14, nome: 'Chuteira Pro SG', preco: 2500.00, imagem: 'chuteira2.jpg', categoria: 'chuteiras' },
             
-            // Caneleiras (2) - QUINTO
-            { id: 17, nome: 'Caneleira Y888', preco: 700.00, imagem: 'images/caneleira1.jpg', categoria: 'caneleiras' },
-            { id: 18, nome: 'Caneleira Simples', preco: 500.00, imagem: 'images/caneleira2.jpg', categoria: 'caneleiras' }
+            // Caneleiras (2)
+            { id: 17, nome: 'Caneleira Y888', preco: 700.00, imagem: 'caneleira1.jpg', categoria: 'caneleiras' },
+            { id: 18, nome: 'Caneleira Simples', preco: 500.00, imagem: 'caneleira2.jpg', categoria: 'caneleiras' }
         ];
 
         let carrinho = [];
@@ -1055,7 +892,7 @@
             initCart();
             initModal();
             initCheckout();
-            initPesquisaToggle();
+            initSearch();
         });
 
         // ===== RENDERIZAR PRODUTOS =====
@@ -1078,152 +915,197 @@
             `).join('');
         }
 
-        // ===== FUNÇÕES DE PESQUISA =====
-        function initPesquisaToggle() {
-            const pesquisaBox = document.getElementById('pesquisaBox');
-            const categoriasForm = document.getElementById('categoriasForm');
+// ===== FUNÇÃO DE PESQUISA PELA LUPA (SEM PROMPT) =====
+function initSearch() {
+    const searchToggle = document.getElementById('searchToggle');
+    
+    searchToggle.addEventListener('click', function() {
+        // Criar um modal de pesquisa simples
+        const modalHtml = `
+            <div class="search-modal" id="searchModal">
+                <div class="search-modal-content">
+                    <span class="search-modal-fechar" id="searchModalFechar">&times;</span>
+                    <h3>🔍 FILTRAR POR CATEGORIA</h3>
+                    <div class="search-categorias">
+                        <button class="search-cat-btn" data-cat="camisas">CAMISAS (10)</button>
+                        <button class="search-cat-btn" data-cat="bolas">BOLAS (4)</button>
+                        <button class="search-cat-btn" data-cat="chuteiras">CHUTEIRAS (2)</button>
+                        <button class="search-cat-btn" data-cat="caneleiras">CANELEIRAS (2)</button>
+                        <button class="search-cat-btn" data-cat="meias">MEIAS (1)</button>
+                    </div>
+                    <button class="search-cat-btn todos" data-cat="todos">MOSTRAR TODOS</button>
+                </div>
+            </div>
+        `;
+        
+        // Adicionar ao body se não existir
+        if (!document.getElementById('searchModal')) {
+            document.body.insertAdjacentHTML('beforeend', modalHtml);
             
-            pesquisaBox.addEventListener('click', function(e) {
-                e.stopPropagation();
-                categoriasForm.classList.toggle('mostrar');
-            });
-            
-            document.addEventListener('click', function(e) {
-                if (!categoriasForm.contains(e.target) && !pesquisaBox.contains(e.target)) {
-                    categoriasForm.classList.remove('mostrar');
+            // Estilos para o modal
+            const style = document.createElement('style');
+            style.textContent = `
+                .search-modal {
+                    display: flex;
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(0,0,0,0.5);
+                    z-index: 3000;
+                    align-items: center;
+                    justify-content: center;
                 }
+                
+                .search-modal-content {
+                    background-color: var(--branco);
+                    border-radius: 15px;
+                    padding: 30px;
+                    max-width: 400px;
+                    width: 90%;
+                    text-align: center;
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+                    position: relative;
+                }
+                
+                .search-modal-fechar {
+                    position: absolute;
+                    top: 15px;
+                    right: 15px;
+                    font-size: 1.5rem;
+                    cursor: pointer;
+                    color: var(--cinza-escuro);
+                }
+                
+                .search-modal h3 {
+                    color: var(--verde-principal);
+                    margin-bottom: 20px;
+                }
+                
+                .search-categorias {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 10px;
+                    margin-bottom: 15px;
+                }
+                
+                .search-cat-btn {
+                    background-color: var(--cinza);
+                    border: 2px solid var(--verde-principal);
+                    color: var(--verde-principal);
+                    padding: 12px;
+                    border-radius: 8px;
+                    font-weight: 600;
+                    cursor: pointer;
+                    transition: all 0.3s;
+                }
+                
+                .search-cat-btn:hover {
+                    background-color: var(--verde-principal);
+                    color: var(--branco);
+                }
+                
+                .search-cat-btn.todos {
+                    grid-column: span 2;
+                    background-color: var(--verde-principal);
+                    color: var(--branco);
+                }
+                
+                .search-cat-btn.todos:hover {
+                    background-color: var(--verde-escuro);
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        // Mostrar modal
+        const modal = document.getElementById('searchModal');
+        modal.style.display = 'flex';
+        
+        // Fechar modal
+        document.getElementById('searchModalFechar').onclick = function() {
+            modal.style.display = 'none';
+        };
+        
+        // Fechar ao clicar fora
+        modal.onclick = function(e) {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        };
+        
+        // Ações dos botões
+        document.querySelectorAll('.search-cat-btn[data-cat]').forEach(btn => {
+            btn.onclick = function() {
+                const cat = this.dataset.cat;
+                
+                if (cat === 'todos') {
+                    renderizarProdutos(produtos);
+                    document.getElementById('noResults').classList.remove('mostrar');
+                } else {
+                    const filtrados = produtos.filter(p => p.categoria === cat);
+                    renderizarProdutos(filtrados);
+                    
+                    if (filtrados.length === 0) {
+                        document.getElementById('noResults').classList.add('mostrar');
+                    } else {
+                        document.getElementById('noResults').classList.remove('mostrar');
+                    }
+                }
+                
+                modal.style.display = 'none';
+            };
+        });
+    });
+}
+
+        // ===== FUNÇÕES DO MODAL =====
+        function abrirModalCompra(id) {
+            produtoSelecionado = produtos.find(p => p.id === id);
+            if (!produtoSelecionado) return;
+
+            document.getElementById('modalProdutoImg').src = produtoSelecionado.imagem;
+            document.getElementById('modalProdutoNome').textContent = produtoSelecionado.nome;
+            document.getElementById('modalProdutoPreco').textContent = produtoSelecionado.preco.toFixed(2) + 'MT';
+            document.getElementById('compraModal').classList.add('active');
+        }
+
+        function fecharModal() {
+            document.getElementById('compraModal').classList.remove('active');
+            produtoSelecionado = null;
+        }
+
+        function initModal() {
+            document.getElementById('modalFechar').addEventListener('click', fecharModal);
+            
+            window.addEventListener('click', function(e) {
+                const modal = document.getElementById('compraModal');
+                if (e.target === modal) fecharModal();
+            });
+            
+            document.getElementById('comprarAgoraBtn').addEventListener('click', function() {
+                if (!produtoSelecionado) return;
+                
+                adicionarAoCarrinho(produtoSelecionado.id, 1);
+                fecharModal();
+                checkout();
+            });
+            
+            document.getElementById('adicionarMaisBtn').addEventListener('click', function() {
+                if (!produtoSelecionado) return;
+                
+                adicionarAoCarrinho(produtoSelecionado.id, 2);
+                fecharModal();
+                alert(`✅ 2 unidades de ${produtoSelecionado.nome} adicionadas ao carrinho!`);
+                document.getElementById('cartDropdown').classList.add('active');
+            });
+            
+            document.getElementById('verCarrinhoBtn').addEventListener('click', function() {
+                fecharModal();
+                document.getElementById('cartDropdown').classList.add('active');
             });
         }
-
-        function aplicarFiltro() {
-            const categoriasSelecionadas = [];
-            
-            if (document.getElementById('catCamisas').checked) categoriasSelecionadas.push('camisas');
-            if (document.getElementById('catBolas').checked) categoriasSelecionadas.push('bolas');
-            if (document.getElementById('catChuteiras').checked) categoriasSelecionadas.push('chuteiras');
-            if (document.getElementById('catCaneleiras').checked) categoriasSelecionadas.push('caneleiras');
-            if (document.getElementById('catMeias').checked) categoriasSelecionadas.push('meias');
-            
-            let produtosFiltrados;
-            
-            if (categoriasSelecionadas.length === 0) {
-                produtosFiltrados = [];
-            } else {
-                produtosFiltrados = produtos.filter(p => categoriasSelecionadas.includes(p.categoria));
-            }
-            
-            renderizarProdutos(produtosFiltrados);
-            
-            if (produtosFiltrados.length === 0) {
-                document.getElementById('noResults').classList.add('mostrar');
-                document.getElementById('resultadoInfo').classList.remove('mostrar');
-            } else {
-                document.getElementById('noResults').classList.remove('mostrar');
-                document.getElementById('resultadoInfo').innerHTML = `Mostrando ${produtosFiltrados.length} produto(s)`;
-                document.getElementById('resultadoInfo').classList.add('mostrar');
-            }
-            
-            // Fechar o formulário
-            document.getElementById('categoriasForm').classList.remove('mostrar');
-        }
-
-        function limparFiltro() {
-            // Marcar todos os checkboxes
-            document.getElementById('catCamisas').checked = true;
-            document.getElementById('catBolas').checked = true;
-            document.getElementById('catChuteiras').checked = true;
-            document.getElementById('catCaneleiras').checked = true;
-            document.getElementById('catMeias').checked = true;
-            
-            // Mostrar todos os produtos
-            renderizarProdutos(produtos);
-            document.getElementById('noResults').classList.remove('mostrar');
-            document.getElementById('resultadoInfo').classList.remove('mostrar');
-            
-            // Fechar o formulário
-            document.getElementById('categoriasForm').classList.remove('mostrar');
-        }
-
-// ===== FUNÇÕES DO MODAL (SUBSTITUA COMPLETAMENTE) =====
-function abrirModalCompra(id) {
-    produtoSelecionado = produtos.find(p => p.id === id);
-    if (!produtoSelecionado) return;
-
-    document.getElementById('modalProdutoImg').src = `images/${produtoSelecionado.imagem}`;
-    document.getElementById('modalProdutoNome').textContent = produtoSelecionado.nome;
-    document.getElementById('modalProdutoPreco').textContent = produtoSelecionado.preco.toFixed(2) + 'MT';
-    document.getElementById('compraModal').classList.add('active');
-}
-
-function fecharModal() {
-    document.getElementById('compraModal').classList.remove('active');
-    produtoSelecionado = null;
-}
-
-function initModal() {
-    document.getElementById('modalFechar').addEventListener('click', fecharModal);
-    
-    window.addEventListener('click', function(e) {
-        const modal = document.getElementById('compraModal');
-        if (e.target === modal) fecharModal();
-    });
-    
-    // COMPRAR AGORA - VAI DIRETO PARA O WHATSAPP
-    document.getElementById('comprarAgoraBtn').addEventListener('click', function() {
-        if (!produtoSelecionado) return;
-        
-        // Adiciona 1 produto ao carrinho
-        adicionarAoCarrinho(produtoSelecionado.id, 1);
-        
-        // Fecha o modal
-        fecharModal();
-        
-        // Vai direto para o WhatsApp
-        checkout();
-    });
-    
-    // ADICIONAR MAIS (+1) - ADICIONA 2 UNIDADES
-    document.getElementById('adicionarMaisBtn').addEventListener('click', function() {
-        if (!produtoSelecionado) return;
-        
-        // Adiciona 2 unidades
-        adicionarAoCarrinho(produtoSelecionado.id, 2);
-        
-        // Fecha o modal
-        fecharModal();
-        
-        // Mostra notificação e abre carrinho
-        alert(`✅ 2 unidades de ${produtoSelecionado.nome} adicionadas ao carrinho!`);
-        document.getElementById('cartDropdown').classList.add('active');
-    });
-    
-    // VER CARRINHO - ABRE O CARRINHO
-    document.getElementById('verCarrinhoBtn').addEventListener('click', function() {
-        fecharModal();
-        document.getElementById('cartDropdown').classList.add('active');
-    });
-}
-
-// ===== FUNÇÃO CHECKOUT CORRIGIDA =====
-function checkout() {
-    if (carrinho.length === 0) {
-        alert('Seu carrinho está vazio!');
-        return;
-    }
-    
-    let msg = "🛒 *NOVO PEDIDO - PRETHOLAS* 🛒\n\n";
-    carrinho.forEach(item => {
-        msg += `${item.nome} - ${item.preco.toFixed(2)}MT x ${item.quantidade}\n`;
-    });
-    const total = carrinho.reduce((acc, item) => acc + (item.preco * item.quantidade), 0);
-    msg += `\n*Total: ${total.toFixed(2)}MT*`;
-    
-    window.open(`https://wa.me/258852158504?text=${encodeURIComponent(msg)}`, '_blank');
-    
-    // OPÇÃO: Se quiser limpar o carrinho após enviar, descomente:
-    // carrinho = [];
-    // atualizarCarrinho();
-}
 
         // ===== FUNÇÕES DO CARRINHO =====
         function adicionarAoCarrinho(id, quantidade = 1) {
@@ -1265,7 +1147,7 @@ function checkout() {
                     total += item.preco * item.quantidade;
                     html += `
                         <div class="cart-item">
-                            <img src="images/${item.imagem}" alt="${item.nome}" class="cart-item-img" 
+                            <img src="${item.imagem}" alt="${item.nome}" class="cart-item-img" 
                                  onerror="this.src='https://via.placeholder.com/50x50?text=Prod'">
                             <div class="cart-item-info">
                                 <div class="cart-item-name">${item.nome}</div>
@@ -1296,22 +1178,24 @@ function checkout() {
             }
         }
 
-        function initCheckout() {
-            document.getElementById('btnCheckout').addEventListener('click', function() {
-                if (carrinho.length === 0) {
-                    alert('Seu carrinho está vazio!');
-                    return;
-                }
-                
-                let msg = "🛒 *NOVO PEDIDO - PRETHOLAS* 🛒\n\n";
-                carrinho.forEach(item => {
-                    msg += `${item.nome} - ${item.preco.toFixed(2)}MT x ${item.quantidade}\n`;
-                });
-                const total = carrinho.reduce((acc, item) => acc + (item.preco * item.quantidade), 0);
-                msg += `\n*Total: ${total.toFixed(2)}MT*`;
-                
-                window.open(`https://wa.me/258852158504?text=${encodeURIComponent(msg)}`, '_blank');
+        function checkout() {
+            if (carrinho.length === 0) {
+                alert('Seu carrinho está vazio!');
+                return;
+            }
+            
+            let msg = "🛒 *NOVO PEDIDO - PRETHOLAS* 🛒\n\n";
+            carrinho.forEach(item => {
+                msg += `${item.nome} - ${item.preco.toFixed(2)}MT x ${item.quantidade}\n`;
             });
+            const total = carrinho.reduce((acc, item) => acc + (item.preco * item.quantidade), 0);
+            msg += `\n*Total: ${total.toFixed(2)}MT*`;
+            
+            window.open(`https://wa.me/258852158504?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        function initCheckout() {
+            document.getElementById('btnCheckout').addEventListener('click', checkout);
         }
 
         // ===== FUNÇÕES DO MENU =====
