@@ -473,6 +473,51 @@
             background-color: #128C7E;
         }
 
+        /* ===== SELETOR DE TAMANHOS ===== */
+        .tamanho-selector {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: var(--cinza);
+            border-radius: 10px;
+        }
+
+        .tamanho-titulo {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--preto);
+        }
+
+        .tamanhos-opcoes {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .tamanho-btn {
+            width: 50px;
+            height: 50px;
+            border: 2px solid var(--verde-principal);
+            background-color: var(--branco);
+            color: var(--verde-principal);
+            font-weight: 700;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tamanho-btn:hover {
+            background-color: var(--verde-principal);
+            color: var(--branco);
+        }
+
+        .tamanho-btn.selecionado {
+            background-color: var(--verde-principal);
+            color: var(--branco);
+            border-color: var(--verde-escuro);
+        }
+
         /* ===== SEÇÃO DE PRODUTOS ===== */
         .destaques {
             padding: 40px 0;
@@ -687,6 +732,78 @@
             font-size: 0.9rem;
         }
 
+        /* ===== MODAL DE PESQUISA ===== */
+        .search-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .search-modal-content {
+            background-color: var(--branco);
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        
+        .search-modal-fechar {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--cinza-escuro);
+        }
+        
+        .search-modal h3 {
+            color: var(--verde-principal);
+            margin-bottom: 20px;
+        }
+        
+        .search-categorias {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .search-cat-btn {
+            background-color: var(--cinza);
+            border: 2px solid var(--verde-principal);
+            color: var(--verde-principal);
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .search-cat-btn:hover {
+            background-color: var(--verde-principal);
+            color: var(--branco);
+        }
+        
+        .search-cat-btn.todos {
+            grid-column: span 2;
+            background-color: var(--verde-principal);
+            color: var(--branco);
+        }
+        
+        .search-cat-btn.todos:hover {
+            background-color: var(--verde-escuro);
+        }
+
         /* ===== RESPONSIVIDADE ===== */
         @media (min-width: 768px) {
             .produtos-grid {
@@ -849,43 +966,36 @@
     </footer>
 
     <script>
-// ===== TODOS OS PRODUTOS COM CAMINHOS CORRIGIDOS =====
-const produtos = [
-    // Camisas (10)
-    { id: 1, nome: 'Liverpool 25/26', preco: 500.00, imagem: 'camisa1.jpg', categoria: 'camisas' },
-    { id: 2, nome: 'Real Madrid 25/26', preco: 500.00, imagem: 'camisa2.jpg', categoria: 'camisas' },
-    { id: 3, nome: 'Barcelona 25/26', preco: 500.00, imagem: 'camisa3.jpg', categoria: 'camisas' },
-    { id: 4, nome: 'Manchester City 25/26', preco: 500.00, imagem: 'camisa4.jpg', categoria: 'camisas' },
-    { id: 5, nome: 'Atletico de Madrid 25/26', preco: 500.00, imagem: 'camisa5.jpg', categoria: 'camisas' },
-    { id: 6, nome: 'Sporting 25/26', preco: 500.00, imagem: 'camisa6.jpg', categoria: 'camisas' },
-    { id: 7, nome: 'Benfica 25/26', preco: 500.00, imagem: 'camisa7.jpg', categoria: 'camisas' },
-    { id: 8, nome: 'Benfica 25/26', preco: 500.00, imagem: 'camisa8.jpg', categoria: 'camisas' },
-    { id: 15, nome: 'Chelsea Casa 25/26', preco: 500.00, imagem: 'camisa9.jpg', categoria: 'camisas' },
-    { id: 16, nome: 'Porto FC Casa 25/26', preco: 500.00, imagem: 'camisa10.jpg', categoria: 'camisas' },
-    
-    // Meias (1)
-    { id: 19, nome: 'Meia Antiderrapante', preco: 500.00, imagem: 'meia1.jpg', categoria: 'meias' },
-    
-    // Bolas (4)
-    { id: 9, nome: 'Bola de Futebol', preco: 3500.00, imagem: 'bola1.jpg', categoria: 'bolas' },
-    { id: 10, nome: 'Bola de Futebol', preco: 3500.00, imagem: 'bola2.jpg', categoria: 'bolas' },
-    { id: 11, nome: 'Bola de Futebol', preco: 3500.00, imagem: 'bola3.jpg', categoria: 'bolas' },
-    { id: 12, nome: 'Bola de Futebol', preco: 3500.00, imagem: 'bola4.jpg', categoria: 'bolas' },
-    
-    // Chuteiras (2)
-    { id: 13, nome: 'Chuteira Elite FG', preco: 2500.00, imagem: 'chuteira1.jpg', categoria: 'chuteiras' },
-    { id: 14, nome: 'Chuteira Pro SG', preco: 2500.00, imagem: 'chuteira2.jpg', categoria: 'chuteiras' },
-    
-    // Caneleiras (2)
-    { id: 17, nome: 'Caneleira Y888', preco: 700.00, imagem: 'caneleira1.jpg', categoria: 'caneleiras' },
-    { id: 18, nome: 'Caneleira Simples', preco: 500.00, imagem: 'caneleira2.jpg', categoria: 'caneleiras' },
-    
-    // Luvas de guarda-redes (1) - CORRIGIDO
-    { id: 20, nome: 'Luvas de guarda-redes', preco: 1200.00, imagem: 'luvas1.jpg', categoria: 'luvas' }
-];
+        // ===== TODOS OS PRODUTOS COM CAMINHOS CORRIGIDOS =====
+        const produtos = [
+            // Camisas (10) - COM TAMANHOS
+            { id: 1, nome: 'Liverpool 25/26', preco: 500.00, imagem: 'camisa1.jpg', categoria: 'camisas', tamanhos: ['S', 'M', 'L', 'XL'] },
+            { id: 2, nome: 'Real Madrid 25/26', preco: 500.00, imagem: 'camisa2.jpg', categoria: 'camisas', tamanhos: ['S', 'M', 'L', 'XL'] },
+            { id: 3, nome: 'Barcelona 25/26', preco: 500.00, imagem: 'camisa3.jpg', categoria: 'camisas', tamanhos: ['S', 'M', 'L', 'XL'] },
+            { id: 4, nome: 'Manchester City 25/26', preco: 500.00, imagem: 'camisa4.jpg', categoria: 'camisas', tamanhos: ['S', 'M', 'L', 'XL'] },
+            { id: 5, nome: 'Atletico de Madrid 25/26', preco: 500.00, imagem: 'camisa5.jpg', categoria: 'camisas', tamanhos: ['S', 'M', 'L', 'XL'] },
+            { id: 6, nome: 'Sporting 25/26', preco: 500.00, imagem: 'camisa6.jpg', categoria: 'camisas', tamanhos: ['S', 'M', 'L', 'XL'] },
+            { id: 7, nome: 'Benfica 25/26', preco: 500.00, imagem: 'camisa7.jpg', categoria: 'camisas', tamanhos: ['S', 'M', 'L', 'XL'] },
+            { id: 8, nome: 'Benfica 25/26', preco: 500.00, imagem: 'camisa8.jpg', categoria: 'camisas', tamanhos: ['S', 'M', 'L', 'XL'] },
+            { id: 15, nome: 'Chelsea Casa 25/26', preco: 500.00, imagem: 'camisa9.jpg', categoria: 'camisas', tamanhos: ['S', 'M', 'L', 'XL'] },
+            { id: 16, nome: 'Porto FC Casa 25/26', preco: 500.00, imagem: 'camisa10.jpg', categoria: 'camisas', tamanhos: ['S', 'M', 'L', 'XL'] },
+            
+            // Outros produtos SEM tamanhos
+            { id: 19, nome: 'Meia Antiderrapante', preco: 500.00, imagem: 'meia1.jpg', categoria: 'meias' },
+            { id: 9, nome: 'Bola de Futebol', preco: 3500.00, imagem: 'bola1.jpg', categoria: 'bolas' },
+            { id: 10, nome: 'Bola de Futebol', preco: 3500.00, imagem: 'bola2.jpg', categoria: 'bolas' },
+            { id: 11, nome: 'Bola de Futebol', preco: 3500.00, imagem: 'bola3.jpg', categoria: 'bolas' },
+            { id: 12, nome: 'Bola de Futebol', preco: 3500.00, imagem: 'bola4.jpg', categoria: 'bolas' },
+            { id: 13, nome: 'Chuteira Elite FG', preco: 2500.00, imagem: 'chuteira1.jpg', categoria: 'chuteiras' },
+            { id: 14, nome: 'Chuteira Pro SG', preco: 2500.00, imagem: 'chuteira2.jpg', categoria: 'chuteiras' },
+            { id: 17, nome: 'Caneleira Y888', preco: 700.00, imagem: 'caneleira1.jpg', categoria: 'caneleiras' },
+            { id: 18, nome: 'Caneleira Simples', preco: 500.00, imagem: 'caneleira2.jpg', categoria: 'caneleiras' },
+            { id: 20, nome: 'Luvas de guarda-redes', preco: 1200.00, imagem: 'luvas1.jpg', categoria: 'luvas' }
+        ];
 
         let carrinho = [];
         let produtoSelecionado = null;
+        let tamanhoSelecionado = null;
 
         // ===== INICIALIZAÇÃO =====
         document.addEventListener('DOMContentLoaded', function() {
@@ -918,152 +1028,29 @@ const produtos = [
             `).join('');
         }
 
-// ===== FUNÇÃO DE PESQUISA PELA LUPA (SEM PROMPT) =====
-function initSearch() {
-    const searchToggle = document.getElementById('searchToggle');
-    
-    searchToggle.addEventListener('click', function() {
-        // Criar um modal de pesquisa simples
-        const modalHtml = `
-            <div class="search-modal" id="searchModal">
-                <div class="search-modal-content">
-                    <span class="search-modal-fechar" id="searchModalFechar">&times;</span>
-                    <h3>🔍 FILTRAR POR CATEGORIA</h3>
-                    <div class="search-categorias">
-                        <button class="search-cat-btn" data-cat="camisas">CAMISAS (10)</button>
-                        <button class="search-cat-btn" data-cat="bolas">BOLAS (4)</button>
-                        <button class="search-cat-btn" data-cat="chuteiras">CHUTEIRAS (2)</button>
-                        <button class="search-cat-btn" data-cat="caneleiras">CANELEIRAS (2)</button>
-                        <button class="search-cat-btn" data-cat="meias">MEIAS (1)</button>
-                    </div>
-                    <button class="search-cat-btn todos" data-cat="todos">MOSTRAR TODOS</button>
-                </div>
-            </div>
-        `;
-        
-        // Adicionar ao body se não existir
-        if (!document.getElementById('searchModal')) {
-            document.body.insertAdjacentHTML('beforeend', modalHtml);
+        // ===== FUNÇÕES DE TAMANHO =====
+        function selecionarTamanho(tamanho) {
+            // Remover seleção anterior
+            document.querySelectorAll('.tamanho-btn').forEach(btn => {
+                btn.classList.remove('selecionado');
+            });
             
-            // Estilos para o modal
-            const style = document.createElement('style');
-            style.textContent = `
-                .search-modal {
-                    display: flex;
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background-color: rgba(0,0,0,0.5);
-                    z-index: 3000;
-                    align-items: center;
-                    justify-content: center;
-                }
-                
-                .search-modal-content {
-                    background-color: var(--branco);
-                    border-radius: 15px;
-                    padding: 30px;
-                    max-width: 400px;
-                    width: 90%;
-                    text-align: center;
-                    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-                    position: relative;
-                }
-                
-                .search-modal-fechar {
-                    position: absolute;
-                    top: 15px;
-                    right: 15px;
-                    font-size: 1.5rem;
-                    cursor: pointer;
-                    color: var(--cinza-escuro);
-                }
-                
-                .search-modal h3 {
-                    color: var(--verde-principal);
-                    margin-bottom: 20px;
-                }
-                
-                .search-categorias {
-                    display: grid;
-                    grid-template-columns: repeat(2, 1fr);
-                    gap: 10px;
-                    margin-bottom: 15px;
-                }
-                
-                .search-cat-btn {
-                    background-color: var(--cinza);
-                    border: 2px solid var(--verde-principal);
-                    color: var(--verde-principal);
-                    padding: 12px;
-                    border-radius: 8px;
-                    font-weight: 600;
-                    cursor: pointer;
-                    transition: all 0.3s;
-                }
-                
-                .search-cat-btn:hover {
-                    background-color: var(--verde-principal);
-                    color: var(--branco);
-                }
-                
-                .search-cat-btn.todos {
-                    grid-column: span 2;
-                    background-color: var(--verde-principal);
-                    color: var(--branco);
-                }
-                
-                .search-cat-btn.todos:hover {
-                    background-color: var(--verde-escuro);
-                }
-            `;
-            document.head.appendChild(style);
+            // Marcar o botão clicado
+            event.target.classList.add('selecionado');
+            
+            // Guardar tamanho selecionado
+            tamanhoSelecionado = tamanho;
         }
-        
-        // Mostrar modal
-        const modal = document.getElementById('searchModal');
-        modal.style.display = 'flex';
-        
-        // Fechar modal
-        document.getElementById('searchModalFechar').onclick = function() {
-            modal.style.display = 'none';
-        };
-        
-        // Fechar ao clicar fora
-        modal.onclick = function(e) {
-            if (e.target === modal) {
-                modal.style.display = 'none';
-            }
-        };
-        
-        // Ações dos botões
-        document.querySelectorAll('.search-cat-btn[data-cat]').forEach(btn => {
-            btn.onclick = function() {
-                const cat = this.dataset.cat;
-                
-                if (cat === 'todos') {
-                    renderizarProdutos(produtos);
-                    document.getElementById('noResults').classList.remove('mostrar');
-                } else {
-                    const filtrados = produtos.filter(p => p.categoria === cat);
-                    renderizarProdutos(filtrados);
-                    
-                    if (filtrados.length === 0) {
-                        document.getElementById('noResults').classList.add('mostrar');
-                    } else {
-                        document.getElementById('noResults').classList.remove('mostrar');
-                    }
-                }
-                
-                modal.style.display = 'none';
-            };
-        });
-    });
-}
 
-        // ===== FUNÇÕES DO MODAL =====
+        function resetarTamanho() {
+            tamanhoSelecionado = null;
+            const botoes = document.querySelectorAll('.tamanho-btn');
+            if (botoes) {
+                botoes.forEach(btn => btn.classList.remove('selecionado'));
+            }
+        }
+
+        // ===== FUNÇÕES DO MODAL COM TAMANHOS =====
         function abrirModalCompra(id) {
             produtoSelecionado = produtos.find(p => p.id === id);
             if (!produtoSelecionado) return;
@@ -1071,11 +1058,55 @@ function initSearch() {
             document.getElementById('modalProdutoImg').src = produtoSelecionado.imagem;
             document.getElementById('modalProdutoNome').textContent = produtoSelecionado.nome;
             document.getElementById('modalProdutoPreco').textContent = produtoSelecionado.preco.toFixed(2) + 'MT';
+            
+            resetarTamanho();
+            
+            // Verificar se o produto tem tamanhos (é camisola)
+            const temTamanhos = produtoSelecionado.tamanhos && produtoSelecionado.tamanhos.length > 0;
+            
+            // Criar ou atualizar o seletor de tamanhos
+            let tamanhoSelector = document.getElementById('tamanhoSelector');
+            
+            if (temTamanhos) {
+                if (!tamanhoSelector) {
+                    // Criar seletor de tamanhos
+                    tamanhoSelector = document.createElement('div');
+                    tamanhoSelector.id = 'tamanhoSelector';
+                    tamanhoSelector.className = 'tamanho-selector';
+                    
+                    let html = '<p class="tamanho-titulo">Selecione o tamanho:</p><div class="tamanhos-opcoes">';
+                    produtoSelecionado.tamanhos.forEach(tamanho => {
+                        html += `<button class="tamanho-btn" onclick="selecionarTamanho('${tamanho}')">${tamanho}</button>`;
+                    });
+                    html += '</div>';
+                    tamanhoSelector.innerHTML = html;
+                    
+                    // Inserir antes das ações
+                    const modalAcoes = document.querySelector('.modal-acoes');
+                    modalAcoes.parentNode.insertBefore(tamanhoSelector, modalAcoes);
+                } else {
+                    // Atualizar opções existentes
+                    let html = '<p class="tamanho-titulo">Selecione o tamanho:</p><div class="tamanhos-opcoes">';
+                    produtoSelecionado.tamanhos.forEach(tamanho => {
+                        html += `<button class="tamanho-btn" onclick="selecionarTamanho('${tamanho}')">${tamanho}</button>`;
+                    });
+                    html += '</div>';
+                    tamanhoSelector.innerHTML = html;
+                    tamanhoSelector.style.display = 'block';
+                }
+            } else {
+                // Esconder seletor se não tiver tamanhos
+                if (tamanhoSelector) {
+                    tamanhoSelector.style.display = 'none';
+                }
+            }
+            
             document.getElementById('compraModal').classList.add('active');
         }
 
         function fecharModal() {
             document.getElementById('compraModal').classList.remove('active');
+            resetarTamanho();
             produtoSelecionado = null;
         }
 
@@ -1087,23 +1118,38 @@ function initSearch() {
                 if (e.target === modal) fecharModal();
             });
             
+            // COMPRAR AGORA
             document.getElementById('comprarAgoraBtn').addEventListener('click', function() {
                 if (!produtoSelecionado) return;
                 
-                adicionarAoCarrinho(produtoSelecionado.id, 1);
+                // Verificar se precisa selecionar tamanho
+                if (produtoSelecionado.tamanhos && !tamanhoSelecionado) {
+                    alert('Por favor, selecione um tamanho!');
+                    return;
+                }
+                
+                adicionarAoCarrinho(produtoSelecionado.id, 1, tamanhoSelecionado);
                 fecharModal();
                 checkout();
             });
             
+            // ADICIONAR MAIS (+1)
             document.getElementById('adicionarMaisBtn').addEventListener('click', function() {
                 if (!produtoSelecionado) return;
                 
-                adicionarAoCarrinho(produtoSelecionado.id, 1);
+                // Verificar se precisa selecionar tamanho
+                if (produtoSelecionado.tamanhos && !tamanhoSelecionado) {
+                    alert('Por favor, selecione um tamanho!');
+                    return;
+                }
+                
+                adicionarAoCarrinho(produtoSelecionado.id, 1, tamanhoSelecionado);
                 fecharModal();
-                alert(`✅ 1 unidade${produtoSelecionado.nome} adicionadas ao carrinho!`);
+                alert(`✅ 1 unidades de${produtoSelecionado.nome} adicionadas ao carrinho!`);
                 document.getElementById('cartDropdown').classList.add('active');
             });
             
+            // VER CARRINHO
             document.getElementById('verCarrinhoBtn').addEventListener('click', function() {
                 fecharModal();
                 document.getElementById('cartDropdown').classList.add('active');
@@ -1111,21 +1157,28 @@ function initSearch() {
         }
 
         // ===== FUNÇÕES DO CARRINHO =====
-        function adicionarAoCarrinho(id, quantidade = 1) {
+        function adicionarAoCarrinho(id, quantidade = 1, tamanho = null) {
             const produto = produtos.find(p => p.id === id);
             if (!produto) return;
 
-            const existente = carrinho.find(item => item.id === id);
+            // Criar identificador único considerando tamanho
+            const itemId = tamanho ? `${id}-${tamanho}` : `${id}`;
+            
+            const existente = carrinho.find(item => item.id === itemId);
             
             if (existente) {
                 existente.quantidade += quantidade;
             } else {
+                const nomeCompleto = tamanho ? `${produto.nome} - Tamanho ${tamanho}` : produto.nome;
+                
                 carrinho.push({
-                    id: produto.id,
-                    nome: produto.nome,
+                    id: itemId,
+                    originalId: id,
+                    nome: nomeCompleto,
                     preco: produto.preco,
                     imagem: produto.imagem,
-                    quantidade: quantidade
+                    quantidade: quantidade,
+                    tamanho: tamanho
                 });
             }
             
@@ -1156,7 +1209,7 @@ function initSearch() {
                                 <div class="cart-item-name">${item.nome}</div>
                                 <div class="cart-item-price">${item.preco.toFixed(2)}MT x ${item.quantidade}</div>
                             </div>
-                            <i class="fas fa-trash cart-item-remove" onclick="removerDoCarrinho(${item.id})"></i>
+                            <i class="fas fa-trash cart-item-remove" onclick="removerDoCarrinho('${item.id}')"></i>
                         </div>
                     `;
                 });
@@ -1246,6 +1299,76 @@ function initSearch() {
                 if (!cartDropdown.contains(e.target) && !cartToggle.contains(e.target)) {
                     cartDropdown.classList.remove('active');
                 }
+            });
+        }
+
+        // ===== FUNÇÃO DE PESQUISA PELA LUPA =====
+        function initSearch() {
+            const searchToggle = document.getElementById('searchToggle');
+            
+            searchToggle.addEventListener('click', function() {
+                // Criar um modal de pesquisa simples
+                const modalHtml = `
+                    <div class="search-modal" id="searchModal">
+                        <div class="search-modal-content">
+                            <span class="search-modal-fechar" id="searchModalFechar">&times;</span>
+                            <h3>🔍 FILTRAR POR CATEGORIA</h3>
+                            <div class="search-categorias">
+                                <button class="search-cat-btn" data-cat="camisas">CAMISAS (10)</button>
+                                <button class="search-cat-btn" data-cat="bolas">BOLAS (4)</button>
+                                <button class="search-cat-btn" data-cat="chuteiras">CHUTEIRAS (2)</button>
+                                <button class="search-cat-btn" data-cat="caneleiras">CANELEIRAS (2)</button>
+                                <button class="search-cat-btn" data-cat="meias">MEIAS (1)</button>
+                                <button class="search-cat-btn" data-cat="luvas">LUVAS (1)</button>
+                            </div>
+                            <button class="search-cat-btn todos" data-cat="todos">MOSTRAR TODOS</button>
+                        </div>
+                    </div>
+                `;
+                
+                // Adicionar ao body se não existir
+                if (!document.getElementById('searchModal')) {
+                    document.body.insertAdjacentHTML('beforeend', modalHtml);
+                }
+                
+                // Mostrar modal
+                const modal = document.getElementById('searchModal');
+                modal.style.display = 'flex';
+                
+                // Fechar modal
+                document.getElementById('searchModalFechar').onclick = function() {
+                    modal.style.display = 'none';
+                };
+                
+                // Fechar ao clicar fora
+                modal.onclick = function(e) {
+                    if (e.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                };
+                
+                // Ações dos botões
+                document.querySelectorAll('.search-cat-btn[data-cat]').forEach(btn => {
+                    btn.onclick = function() {
+                        const cat = this.dataset.cat;
+                        
+                        if (cat === 'todos') {
+                            renderizarProdutos(produtos);
+                            document.getElementById('noResults').classList.remove('mostrar');
+                        } else {
+                            const filtrados = produtos.filter(p => p.categoria === cat);
+                            renderizarProdutos(filtrados);
+                            
+                            if (filtrados.length === 0) {
+                                document.getElementById('noResults').classList.add('mostrar');
+                            } else {
+                                document.getElementById('noResults').classList.remove('mostrar');
+                            }
+                        }
+                        
+                        modal.style.display = 'none';
+                    };
+                });
             });
         }
     </script>
