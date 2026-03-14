@@ -1098,9 +1098,9 @@ function initSearch() {
             document.getElementById('adicionarMaisBtn').addEventListener('click', function() {
                 if (!produtoSelecionado) return;
                 
-                adicionarAoCarrinho(produtoSelecionado.id, 2);
+                adicionarAoCarrinho(produtoSelecionado.id, 1);
                 fecharModal();
-                alert(`✅ 2 unidades de ${produtoSelecionado.nome} adicionadas ao carrinho!`);
+                alert(`✅ 1 unidade${produtoSelecionado.nome} adicionadas ao carrinho!`);
                 document.getElementById('cartDropdown').classList.add('active');
             });
             
