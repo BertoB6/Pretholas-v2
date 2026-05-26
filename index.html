@@ -1247,7 +1247,7 @@
             const total = carrinho.reduce((acc, item) => acc + (item.preco * item.quantidade), 0);
             msg += `\n*Total: ${total.toFixed(2)}MT*`;
             
-            window.open(`https://wa.me/258852158504?text=${encodeURIComponent(msg)}`, '_blank');
+            window.open(`checkout.html`, '_blank');
         }
 
         function initCheckout() {
