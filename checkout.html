@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Pretholas - Finalizar Pagamento</title>
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #ffffff;
+    color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    max-width: 500px;
+    width: 100%;
+    margin: auto;
+}
+
+/* CARD PRINCIPAL */
+.checkout-card {
+    background: linear-gradient(135deg, #00d728, #00b922);
+    border-radius: 25px;
+    padding: 30px;
+    box-shadow: 0 0 30px #000000(255,0,100,0.3);
+    animation: fadeInUp 0.5s ease;
+    border: 1px solid #000000(255,0,79,0.3);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* LOGO */
+.logo {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    background: linear-gradient(135deg, #00ff9c, #000000, #00ff9c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 30px;
+    font-size: 0.85rem;
+}
+
+/* FORMULÁRIO */
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #0a0a0a;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 12px 15px;
+    background: #0a0a0a;
+    border: 1px solid #333;
+    border-radius: 12px;
+    color: white;
+    font-size: 1rem;
+    transition: 0.3s;
+    font-family: inherit;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: ##00ff9c;
+    box-shadow: 0 0 10px rgba(255,0,79,0.3);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* RESUMO DO PEDIDO */
+.order-summary {
+    background: rgba(255,0,79,0.1);
+    padding: 12px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    text-align: center;
+    border: 1px solid #ffffff(255,0,79,0.3);
+}
+
+.order-summary p {
+    margin: 5px 0;
+    font-size: 0.85rem;
+}
+
+.order-summary strong {
+    color: #ff004f;
+}
+
+/* BOTÃO PRINCIPAL */
+.btn-primary {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(90deg, #ff004f, #8000ff);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(255,0,79,0.4);
+}
+
+/* SEÇÃO DE PAGAMENTO */
+.payment-section {
+    margin-top: 20px;
+}
+
+/* CTAs GRANDES */
+.cta-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.cta-mpesa, .cta-emola {
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
+    border: 2px solid;
+}
+
+.cta-mpesa {
+    background: linear-gradient(135deg, #4CAF50, #2E7D32);
+    border-color: #ffffff;
+}
+
+.cta-emola {
+    background: linear-gradient(135deg, #2196F3, #0b5e7e);
+    border-color: #ffffff;
+}
+
+.cta-mpesa:hover, .cta-emola:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 30px #ea1248(0,255,156,0.3);
+}
+
+.cta-mpesa h2, .cta-emola h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.cta-mpesa p, .cta-emola p {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+/* INFORMAÇÕES DE PAGAMENTO (aparece após clicar no CTA) */
+.payment-info {
+    background: #00b922;
+    border-radius: 20px;
+    padding: 20px;
+    margin-top: 20px;
+    border: 1px solid #3a0303;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.payment-info h3 {
+    color: #000000;
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+
+/* NÚMERO COPIAVEL */
+.copy-number {
+    background: linear-gradient(135deg, #c8fcce, #c3fac9);
+    border: 2px dashed #ff004f;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.copy-number:hover {
+    border-color: #ffffff;
+    transform: scale(1.02);
+}
+
+.copy-number .numero {
+    font-size: 2rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: #c00000;
+    margin: 10px 0;
+}
+
+.copy-number small {
+    color: #c00000;
+    font-size: 0.75rem;
+}
+
+/* BOTÃO PAGAR AGORA */
+.btn-pagar-agora {
+    width: 100%;
+    padding: 15px;
+    background: #ff004f;
+    border: none;
+    border-radius: 12px;
+    color: #000000;
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-pagar-agora:hover {
+    background: #cc0040;
+    transform: scale(1.02);
+}
+
+/* BOTÃO ENVIAR COMPROVATIVO */
+.btn-enviar-comprovativo {
+    width: 100%;
+    padding: 15px;
+    background: #00ff9c;
+    border: none;
+    border-radius: 12px;
+    color: ##ffffff;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-enviar-comprovativo:hover {
+    background: #00cc7a;
+    transform: scale(1.02);
+}
+
+/* NOTIFICAÇÃO DO SITE */
+.notification {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    max-width: 400px;
+    margin: 0 auto;
+    background: #1a1a1a;
+    border-left: 4px solid #ffffff;
+    padding: 15px 20px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+    transform: translateX(-120%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+.notification-icon {
+    font-size: 1.5rem;
+}
+
+.notification-content {
+    flex: 1;
+}
+
+.notification-title {
+    font-weight: bold;
+    margin-bottom: 4px;
+    color: #00ff9c;
+}
+
+.notification-message {
+    font-size: 0.85rem;
+    color: #ccc;
+}
+
+.notification-close {
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #888;
+    transition: 0.3s;
+}
+
+.notification-close:hover {
+    color: #ff004f;
+}
+
+/* BOTÃO VOLTAR */
+.btn-voltar {
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    border: 1px solid #333;
+    border-radius: 12px;
+    color: #ffffff;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 15px;
+}
+
+.btn-voltar:hover {
+    border-color: #ff004f;
+    color: #ff004f;
+}
+
+/* HIDDEN */
+.hidden {
+    display: none;
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 600px) {
+    .checkout-card {
+        padding: 20px;
+    }
+    
+    .cta-mpesa h2, .cta-emola h2 {
+        font-size: 1.4rem;
+    }
+    
+    .copy-number .numero {
+        font-size: 1.5rem;
+    }
+    
+    .notification {
+        left: 10px;
+        right: 10px;
+        padding: 12px 15px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="checkout-card">
+        
+        <div class="logo">Pretholas</div>
+        <div class="subtitle">Complete seu pagamento</div>
+        
+        <!-- FORMULÁRIO INICIAL -->
+        <div id="formSection">
+            <form id="paymentForm">
+                <div class="form-group">
+                    <label>Nome Completo</label>
+                    <input type="text" id="nome" placeholder="Digite seu nome" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Número de Telefone</label>
+                    <input type="tel" id="telefone" placeholder="84 123 4567" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Produto</label>
+                    <textarea id="servico" placeholder="Ex: Camisolas, chuteiras..." required></textarea>
+                </div>
+                
+                <div class="order-summary" id="orderSummary">
+                    <p><strong>Seu Pedido</strong></p>
+                    <p id="summaryText">Aguardando preenchimento...</p>
+                </div>
+                
+                <button type="submit" class="btn-primary">
+                    💳 Continuar para Pagamento
+                </button>
+            </form>
+        </div>
+        
+        <!-- SEÇÃO DE PAGAMENTO (oculta inicialmente) -->
+        <div id="paymentSection" class="hidden">
+            
+            <!-- CTAs GRANDES -->
+            <div class="cta-buttons">
+                <div class="cta-mpesa" onclick="mostrarInfoPagamento('mpesa')">
+                    <h2>📱 M-Pesa</h2>
+                    <p>Pagamentos M-Pesa indisponiveis</p>
+                </div>
+                
+                <div class="cta-emola" onclick="mostrarInfoPagamento('emola')">
+                    <h2>💳 e-Mola</h2>
+                    <p>Clique para pagar com e-Mola</p>
+                </div>
+            </div>
+            
+            <!-- INFORMAÇÕES DE PAGAMENTO (aparece dinamicamente) -->
+            <div id="paymentInfo" class="hidden"></div>
+            
+            <button class="btn-voltar" onclick="voltarAoFormulario()">
+                ↩️ Voltar e alterar dados
+            </button>
+        </div>
+        
+    </div>
+</div>
+
+<!-- NOTIFICAÇÃO DO SITE -->
+<div id="notification" class="notification">
+    <div class="notification-icon">ℹ️</div>
+    <div class="notification-content">
+        <div class="notification-title">Dica Rápida</div>
+        <div class="notification-message">Clique no número para copiar, depois clique em "Pagar Agora"</div>
+    </div>
+    <div class="notification-close" onclick="fecharNotificacao()">✕</div>
+</div>
+
+<script>
+
+// Variáveis globais
+let pedidoData = {
+    nome: '',
+    telefone: '',
+    servico: ''
+};
+
+let metodoPagamentoAtual = '';
+
+// Elementos DOM
+const formSection = document.getElementById('formSection');
+const paymentSection = document.getElementById('paymentSection');
+const paymentForm = document.getElementById('paymentForm');
+const paymentInfo = document.getElementById('paymentInfo');
+
+// ==================== FUNÇÕES DE NOTIFICAÇÃO ====================
+
+function mostrarNotificacao(titulo, mensagem, tipo = 'info') {
+    const notification = document.getElementById('notification');
+    const icon = notification.querySelector('.notification-icon');
+    const title = notification.querySelector('.notification-title');
+    const message = notification.querySelector('.notification-message');
+    
+    // Configurar ícone baseado no tipo
+    if (tipo === 'success') {
+        icon.innerHTML = '✅';
+        title.style.color = '#00ff9c';
+    } else if (tipo === 'warning') {
+        icon.innerHTML = '⚠️';
+        title.style.color = '#ffaa00';
+    } else if (tipo === 'error') {
+        icon.innerHTML = '❌';
+        title.style.color = '#ff004f';
+    } else {
+        icon.innerHTML = 'ℹ️';
+        title.style.color = '#00ff9c';
+    }
+    
+    title.innerHTML = titulo;
+    message.innerHTML = mensagem;
+    
+    notification.classList.add('show');
+    
+    // Auto fechar após 5 segundos
+    setTimeout(() => {
+        fecharNotificacao();
+    }, 5000);
+}
+
+function fecharNotificacao() {
+    const notification = document.getElementById('notification');
+    notification.classList.remove('show');
+}
+
+// ==================== FUNÇÕES DO FORMULÁRIO ====================
+
+function validarFormulario() {
+    pedidoData.nome = document.getElementById('nome').value.trim();
+    pedidoData.telefone = document.getElementById('telefone').value.trim();
+    pedidoData.servico = document.getElementById('servico').value.trim();
+    
+    if (!pedidoData.nome || !pedidoData.telefone || !pedidoData.servico) {
+        mostrarNotificacao('Campos incompletos', 'Por favor, preencha todos os campos!', 'error');
+        return false;
+    }
+    
+    // Validar telefone Moçambique
+    const telefoneRegex = /^[8|7][0-9]{8}$/;
+    if (!telefoneRegex.test(pedidoData.telefone.replace(/\s/g, ''))) {
+        mostrarNotificacao('Número inválido', 'Use 84xxxxxxx ou 87xxxxxxx (9 dígitos)', 'error');
+        return false;
+    }
+    
+    return true;
+}
+
+function enviarParaGoogleForms() {
+    // Criar formulário invisível
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = 'https://docs.google.com/forms/d/e/1FAIpQLSeUrH8qgCOdqVNWCcaG2UgYnEAOSEeMeUm7xwYtL2ilKbrUQA/formResponse';
+    form.target = 'hiddenFrame';
+    form.style.display = 'none';
+    
+    // Adicionar campos
+    const campos = [
+        { name: 'entry.956086562', value: pedidoData.nome },
+        { name: 'entry.858306495', value: pedidoData.telefone },
+        { name: 'entry.31511569', value: pedidoData.servico }
+    ];
+    
+    campos.forEach(campo => {
+        const input = document.createElement('input');
+        input.name = campo.name;
+        input.value = campo.value;
+        form.appendChild(input);
+    });
+    
+    document.body.appendChild(form);
+    
+    // Iframe invisível
+    const iframe = document.createElement('iframe');
+    iframe.name = 'hiddenFrame';
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+    
+    form.submit();
+    
+    // Limpar
+    setTimeout(() => {
+        document.body.removeChild(form);
+        document.body.removeChild(iframe);
+    }, 1000);
+}
+
+function continuarParaPagamento() {
+    if (!validarFormulario()) return;
+    
+    // Enviar para Google Forms
+    enviarParaGoogleForms();
+    
+    // Esconder formulário e mostrar CTAs
+    formSection.classList.add('hidden');
+    paymentSection.classList.remove('hidden');
+    
+    mostrarNotificacao('Pedido registrado!', `Olá ${pedidoData.nome}, escolha como deseja pagar abaixo.`, 'success');
+}
+
+// ==================== FUNÇÕES DE PAGAMENTO ====================
+
+function mostrarInfoPagamento(metodo) {
+    metodoPagamentoAtual = metodo;
+    
+    const numero = metodo === 'mpesa' ? '' : '879964482';
+    const nomeMetodo = metodo === 'mpesa' ? 'M-Pesa' : 'e-Mola';
+    const cor = metodo === 'mpesa' ? '#4CAF50' : '#2196F3';
+    
+    // Criar HTML das informações de pagamento
+    const infoHTML = `
+        <div class="payment-info">
+            <h3>💰 Pagar com ${nomeMetodo}</h3>
+            
+            <!-- Número Copiável -->
+            <div class="copy-number" onclick="copiarNumero('${numero}', '${nomeMetodo}')">
+                <div class="numero">${numero.slice(0,3)} ${numero.slice(3,6)} ${numero.slice(6,9)}</div>
+                <small>Clique aqui para copiar</small>
+            </div>
+            
+            <!-- Botão Pagar Agora (USSD) -->
+            <button class="btn-pagar-agora" onclick="pagarAgora('${metodo}')">
+                📞 Pagar Agora (${nomeMetodo})
+            </button>
+            
+            <!-- Botão Enviar Comprovativo -->
+            <button class="btn-enviar-comprovativo" onclick="enviarComprovativo()">
+                📩 Enviar Comprovativo WhatsApp
+            </button>
+            
+            <button class="btn-voltar" onclick="voltarParaCTAs()" style="margin-top: 15px;">
+                ↩️ Voltar para opções de pagamento
+            </button>
+        </div>
+    `;
+    
+    paymentInfo.innerHTML = infoHTML;
+    paymentInfo.classList.remove('hidden');
+    
+    // Scroll para as informações
+    paymentInfo.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    
+    // Mostrar notificação de instrução
+    mostrarNotificacao('Como pagar', `1️⃣ Copie o número\n2️⃣ Clique em "Pagar Agora"\n3️⃣ Envie o valor\n4️⃣ Envie o comprovativo`, 'info');
+}
+
+function voltarParaCTAs() {
+    paymentInfo.classList.add('hidden');
+    paymentInfo.innerHTML = '';
+    
+    // Scroll para os CTAs
+    document.querySelector('.cta-buttons').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function copiarNumero(numero, metodo) {
+    // Copiar número
+    navigator.clipboard.writeText(numero).then(() => {
+        mostrarNotificacao('Número copiado!', `${metodo}: ${numero} copiado com sucesso!`, 'success');
+        
+        // Perguntar se quer abrir o pagamento
+        setTimeout(() => {
+            const confirmar = confirm(`✅ Número ${numero} copiado!\n\nAgora clique em "OK" para abrir o ${metodo} e fazer o pagamento.`);
+            if (confirmar) {
+                if (metodo === 'M-Pesa') {
+                    window.alert("Pagamentos Mpesa indisponiveis");
+                } else {
+                    window.location.href = 'tel:*898#';
+                }
+            }
+        }, 500);
+    }).catch(() => {
+        // Fallback
+        const textarea = document.createElement('textarea');
+        textarea.value = numero;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        mostrarNotificacao('Número copiado!', `${metodo}: ${numero} copiado!`, 'success');
+    });
+}
+
+function pagarAgora(metodo) {
+    const ussdCode = metodo === 'mpesa' ? '*150#' : '*898#';
+    const nomeMetodo = metodo === 'mpesa' ? 'M-Pesa' : 'e-Mola';
+    
+    mostrarNotificacao('Abrindo ' + nomeMetodo, 'O aplicativo de telefone será aberto para completar o pagamento.', 'info');
+    
+    // Abrir o USSD
+    window.location.href = `tel:${ussdCode}`;
+}
+
+function enviarComprovativo() {
+    if (!pedidoData.nome || !pedidoData.servico) {
+        mostrarNotificacao('Erro', 'Dados do pedido não encontrados. Volte ao formulário.', 'error');
+        voltarAoFormulario();
+        return;
+    }
+    
+    const metodoNome = metodoPagamentoAtual === 'mpesa' ? 'M-Pesa' : 'e-Mola';
+    const numero = metodoPagamentoAtual === 'mpesa' ? '858112264' : '866968039';
+    
+    // Criar mensagem personalizada
+    const mensagem = `Pagamento realizado com sucesso! Aguardo a liberação do jogo.`;
+    
+    const whatsappUrl = `https://wa.me/258852158504?text=${mensagem}`;
+    
+    mostrarNotificacao('Abrindo WhatsApp', 'Envie o comprovativo de pagamento para finalizar seu pedido.', 'success');
+    
+    // Abrir WhatsApp
+    window.open(whatsappUrl, '_blank');
+    
+    // Notificação final
+    setTimeout(() => {
+        mostrarNotificacao('✅ Pedido finalizado!', 'Após enviar o comprovativo, aguarde a confirmação e receberá seu jogo.', 'success');
+    }, 2000);
+}
+
+function voltarAoFormulario() {
+    formSection.classList.remove('hidden');
+    paymentSection.classList.add('hidden');
+    paymentInfo.classList.add('hidden');
+    paymentInfo.innerHTML = '';
+    
+    mostrarNotificacao('Voltando', 'Você pode alterar os dados do seu pedido.', 'info');
+    
+    // Scroll para o formulário
+    formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ==================== ATUALIZAR RESUMO ====================
+function atualizarResumo() {
+    const nome = document.getElementById('nome')?.value;
+    const servico = document.getElementById('servico')?.value;
+    const summaryText = document.getElementById('summaryText');
+    
+    if (nome && servico && summaryText) {
+        summaryText.innerHTML = `👤 ${nome}<br>${servico}`;
+    } else if (summaryText) {
+        summaryText.innerHTML = 'Aguardando preenchimento...';
+    }
+}
+
+// ==================== EVENT LISTENERS ====================
+if (paymentForm) {
+    paymentForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        continuarParaPagamento();
+    });
+}
+
+if (document.getElementById('nome') && document.getElementById('servico')) {
+    document.getElementById('nome').addEventListener('input', atualizarResumo);
+    document.getElementById('servico').addEventListener('input', atualizarResumo);
+}
+
+// Prevenir fechamento acidental
+window.addEventListener('beforeunload', (e) => {
+    if (formSection && !formSection.classList.contains('hidden')) {
+        const nome = document.getElementById('nome')?.value;
+        if (nome && nome.trim() !== '') {
+            e.preventDefault();
+            e.returnValue = '';
+            return '';
+        }
+    }
+});
+
+// Mostrar notificação inicial
+setTimeout(() => {
+    mostrarNotificacao('Bem-vindo!', 'Preencha o formulário para continuar com o pagamento.', 'info');
+}, 1000);
+
+</script>
+
+</body>
+</html>
